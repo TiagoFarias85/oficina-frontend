@@ -65,7 +65,8 @@ function Login() {
 
              {/*   <form onSubmit={handleLogin}>*/}
 
-                    <form onSubmit={(e) => {
+                <form onSubmit={(e) => {
+                    e.preventDefault();
                         console.log("SUBMIT DISPARADO");
                         handleLogin(e);
                     }}>
