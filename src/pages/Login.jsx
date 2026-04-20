@@ -15,8 +15,6 @@ function Login() {
 
     async function handleLogin(e) {
 
-        console.log("LOGIN DISPARADO");
-
         e.preventDefault();
         setLoading(true);
         setErro(null);
@@ -115,7 +113,8 @@ function Login() {
                     </div>
 
                     <button
-                        type="submit"
+                        //type="submit"
+                        type="button"
                         onClick={handleLogin}
                         disabled={loading}
                         style={{
