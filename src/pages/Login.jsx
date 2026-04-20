@@ -14,6 +14,9 @@ function Login() {
     const [loading, setLoading] = useState(false);
 
     async function handleLogin(e) {
+
+        console.log("LOGIN DISPARADO");
+
         e.preventDefault();
         setLoading(true);
         setErro(null);
