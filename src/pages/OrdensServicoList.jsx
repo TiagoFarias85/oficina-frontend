@@ -126,7 +126,7 @@ function OrdensServicoList() {
                 {ordens.length === 0 ? (
                     <p>Nenhuma ordem encontrada.</p>
                 ) : (
-                        ordens.map(os => (
+                    ordens.map(os => (
                         <div
                             key={os.id}
                             onClick={() => navigate(`/ordens-servico/${os.id}`)}
@@ -146,71 +146,32 @@ function OrdensServicoList() {
                                 e.currentTarget.style.transform = "scale(1)"
                             }
                         >
-                            
-                            {/* Header */}
-                            {/*<div style={{*/}
-                            {/*    display: "flex",*/}
-                            {/*    justifyContent: "space-between",*/}
-                            {/*    marginBottom: 10*/}
-                            {/*}}>*/}
-                            {/*    */}{/*<strong>OS #{os.id}</strong>*/}
-                            {/*    <strong>{os.clienteNome}</strong>*/}
-                            {/*    <span>*/}
-                            {/*        {os.laudoGerado ? "🔒" : "🔓"}*/}
-                            {/*    </span>*/}
-                            {/*</div>*/}
-
-                            {/* Cliente */}
-                            {/*<div style={{ marginBottom: 6 }}>*/}
-                            {/*    <strong>{os.clienteNome}</strong>*/}
-                            {/*</div>*/}
-
-                            {/* Status */}
-                            {/*<div style={{ marginBottom: 6 }}>*/}
-                            {/*    <StatusBadge status={os.status} />*/}
-                            {/*</div>*/}
-
-                            {/* Total */}
-                            {/*<div>*/}
-                            {/*    <strong>*/}
-                            {/*        R$ {Number(os.valorTotal).toFixed(2)}*/}
-                            {/*    </strong>*/}
-                            {/*</div>*/}
 
                             {/* Header */}
                             <div style={{
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "center",
-                                marginBottom: 8
+                                marginBottom: 10
                             }}>
-                                <strong style={{ fontSize: 16 }}>
-                                    {os.clienteNome}
-                                </strong>
-
+                                <strong>OS #{os.id}</strong>
                                 <span>
                                     {os.laudoGerado ? "🔒" : "🔓"}
                                 </span>
                             </div>
 
-                            {/* Veículo */}
-                            <div style={{ marginBottom: 4, color: "#374151" }}>
-                                {os.veiculoModelo} - {os.veiculoPlaca}
+                            {/* Cliente */}
+                            <div style={{ marginBottom: 6 }}>
+                                <strong>{os.clienteNome}</strong>
                             </div>
 
-                            {/* OS + Status */}
-                            <div style={{ marginBottom: 6, fontSize: 13, color: "#6b7280" }}>
-                                OS-{os.id.toString().padStart(4, "0")} • {os.status}
-                            </div>
-
-                            {/* Status Badge */}
-                            <div style={{ marginBottom: 10 }}>
+                            {/* Status */}
+                            <div style={{ marginBottom: 6 }}>
                                 <StatusBadge status={os.status} />
                             </div>
 
                             {/* Total */}
                             <div>
-                                <strong style={{ fontSize: 16 }}>
+                                <strong>
                                     R$ {Number(os.valorTotal).toFixed(2)}
                                 </strong>
                             </div>

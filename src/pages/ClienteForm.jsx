@@ -140,8 +140,8 @@ function ClienteForm() {
 
                 <form onSubmit={handleSubmit}>
 
-                    {renderInput("Nome *", "nome")}
-                    {renderInput("Telefone *", "telefone")}
+                    {renderInput("Nome", "nome")}
+                    {renderInput("Telefone", "telefone")}
                     {renderInput("CPF/CNPJ", "cpfCnpj")}
                     {renderInput("Email", "email")}
 

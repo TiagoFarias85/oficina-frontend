@@ -14,38 +14,25 @@ function Login() {
     const [loading, setLoading] = useState(false);
 
     async function handleLogin(e) {
-
         e.preventDefault();
-        //console.log("1 - Entrou no handleLogin");
-
         setLoading(true);
         setErro(null);
 
         try {
-            //console.log("2 - Antes do apiPost");
+
             const data = await apiPost("/auth/login", { email, senha });
-            console.log("LOGIN DATA:", data);
-            //console.log("3 - Depois do apiPost", data);
+
             login(data.token, data.nome, data.perfil);
-            //console.log("4 - Depois do login()");
+
             if (data.senhaProvisoria) {
-                //console.log("5 - Navegando para trocar senha");
                 navigate("/trocar-senha");
             } else {
-                //console.log("6 - Navegando para dashboard");
                 navigate("/dashboard");
             }
 
         } catch (err) {
-            //console.log("7 - Entrou no catch");
-            //console.log("ERRO LOGIN:", err);
-            //console.log("ERR MESSAGE:", err.message);
-            //console.log("ERR RESPONSE:", err.response);
-            //console.log("ERR RESPONSE DATA:", err.response?.data);
-
             setErro(err.message || "Erro ao fazer login");
         } finally {
-            console.log("8 - Finally");
             setLoading(false);
         }
     }
@@ -69,11 +56,9 @@ function Login() {
                     boxShadow: "0 8px 30px rgba(0,0,0,0.2)"
                 }}
             >
-                <h5 style={{ marginBottom: "25px", textAlign: "center" }}>
-                    
-
-                    <h1>🔧 {import.meta.env.VITE_APP_NOME || "🔧  Sistema Oficina"}</h1>
-                </h5>
+                <h2 style={{ marginBottom: "25px", textAlign: "center" }}>
+                    🔧 Sistema Oficina
+                </h2>
 
                 <form onSubmit={handleLogin}>
 
@@ -110,7 +95,6 @@ function Login() {
                     </div>
 
                     <button
-                        type="submit"
                         disabled={loading}
                         style={{
                             width: "100%",

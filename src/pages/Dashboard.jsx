@@ -39,11 +39,6 @@ function Dashboard() {
         marginTop: "5px"
     };
 
-    const PERFIS = {
-        ADMIN: "ADMINISTRADOR",
-        MECANICO: "MECANICO"
-    };
-
     return (
         //<div>
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { apiGet, apiDelete, apiPost, apiPut } from '../services/api'
 import { toastSucesso, toastErro } from "../utils/toast";
 import { confirmar } from "../utils/confirm";
-//import { obterMensagemErro } from "../utils/obterMensagemErro";
+
 function OrdemServicoDetalhe() {
 
     const { id } = useParams()
@@ -18,48 +18,6 @@ function OrdemServicoDetalhe() {
     const [valorPeca, setValorPeca] = useState('');
     const [toast, setToast] = useState(null);
     const [loading, setLoading] = useState(false);
-
-    //Criar estado de edição
-    const [editandoDescricao, setEditandoDescricao] = useState(false);
-    const [descricaoEditada, setDescricaoEditada] = useState("");
-
-    const [valorPagamento, setValorPagamento] = useState("");
-    const [formaPagamento, setFormaPagamento] = useState("");
-
-    const STATUS_OS = {
-        ABERTO: "Aberto",
-        EM_EXECUCAO: "EmExecucao",
-        FINALIZADO: "Finalizado",
-        CANCELADO: "Cancelado"
-    };
-
-    const podeRegistrarPagamento =
-        os?.status !== STATUS_OS.CANCELADO;
-
-    //const formatarStatus = (status) => {
-    //    if (status === "EmExecucao") return "Em execução";
-    //    return status;
-    //};
-
-    const sectionStyle = {
-        padding: "20px",
-        borderRadius: "10px",
-        backgroundColor: "white",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-        marginBottom: "20px"
-    };
-
-    //const osBloqueadaEdicao =
-    //    os?.laudoGerado ||
-    //    (os?.status !== STATUS_OS.ABERTO && os?.status !== STATUS_OS.EM_EXECUCAO && os?.status === "Cancelado");
-
-    const osBloqueadaEdicao =
-        os?.laudoGerado ||
-        os?.status === STATUS_OS.FINALIZADO ||
-        os?.status === STATUS_OS.CANCELADO;
-
-
-
 
     //const cardStyle = {
     //    padding: "15px",
@@ -84,7 +42,7 @@ function OrdemServicoDetalhe() {
 
             } catch (error) {
                 if (isMounted)
-                    toastErro(obterMensagemErro(error, error.message || "Erro ao carregar OS"));
+                    toastErro(error.message || "Erro ao carregar OS")   
 
                 //setErro(error.message)
             } finally {
@@ -143,7 +101,7 @@ function OrdemServicoDetalhe() {
             return
         }
 
-        if (os.status === STATUS_OS.FINALIZADO) {
+        if (os.status === "Finalizada") {
             showToast("Esta OS está finalizada e não pode ser alterada", "error")
             return
         }
@@ -212,16 +170,12 @@ function OrdemServicoDetalhe() {
             toastSucesso("Serviço removido com sucesso!")
 
         } catch (error) {
-            toastErro(obterMensagemErro(error, "Erro ao remover serviço"));
+            toastErro("Erro ao remover serviço")
+            console.error(error)
         }
     }
 
     async function adicionarPeca() {
-
-        if (osBloqueadaEdicao) {
-            toastErro("Esta OS está bloqueada para edição.");
-            return;
-        }
 
         if (!descricaoPeca.trim()) {
             showToast("Informe a descrição da peça", "error")
@@ -256,7 +210,8 @@ function OrdemServicoDetalhe() {
             toastSucesso("Peça adicionada com sucesso!")
 
         } catch (error) {
-            toastErro(obterMensagemErro(error, "Erro ao adicionar peça"));
+            toastErro("Erro ao adicionar peça")
+            console.error(error)
         }
     }
 
@@ -276,7 +231,8 @@ function OrdemServicoDetalhe() {
             toastSucesso("Peça removida com sucesso!")
 
         } catch (error) {
-            toastErro(obterMensagemErro(error, "Erro ao remover peça"));
+            toastErro("Erro ao remover peça")
+            console.error(error)
         }
     }
 
@@ -294,40 +250,16 @@ function OrdemServicoDetalhe() {
             toastSucesso("Status alterado com sucesso!")
 
         } catch (error) {
-            toastErro(obterMensagemErro(error, "Erro ao alterar status"));
+            toastErro("Erro ao alterar status", "error")
+            console.error(error)
         }
     }
 
-    //function gerarLaudo() {
-    //    window.open(
-    //        `http://localhost:5175/api/ordens-servico/${id}/laudo`,
-    //        '_blank'
-    //    )
-    //}
-
-    async function gerarLaudo() {
-        try {
-            const token = localStorage.getItem("token");
-
-            const response = await fetch(`http://localhost:5175/api/ordens-servico/${id}/laudo`, {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error("Erro ao gerar laudo");
-            }
-
-            const blob = await response.blob();
-            const fileURL = window.URL.createObjectURL(blob);
-
-            window.open(fileURL, "_blank");
-        } catch (error) {
-            console.error(error);
-            toastErro("Erro ao gerar laudo");
-        }
+    function gerarLaudo() {
+        window.open(
+            `http://localhost:5175/api/ordens-servico/${id}/laudo`,
+            '_blank'
+        )
     }
 
     if (erro) return <p style={{ color: 'red' }}>{erro}</p>
@@ -335,39 +267,15 @@ function OrdemServicoDetalhe() {
 
     function getStatusStyle(status) {
         switch (status) {
-            case STATUS_OS.ABERTO:
+            case "Aberta":
                 return { backgroundColor: "#ffc107", color: "#000" }
-            case STATUS_OS.EM_EXECUCAO:
+            case "EmExecucao":
                 return { backgroundColor: "#17a2b8", color: "#fff" }
-            case STATUS_OS.FINALIZADO:
+            case "Finalizado":
                 return { backgroundColor: "#28a745", color: "#fff" }
             default:
                 return { backgroundColor: "#6c757d", color: "#fff" }
         }
-    }
-
-    function obterMensagemErro(error, fallback = "Ocorreu um erro") {
-        const data = error?.response?.data;
-
-        // Caso 1: já venha como objeto { message: "..." }
-        if (data && typeof data === "object" && data.message) {
-            return data.message;
-        }
-
-        // Caso 2: venha como string JSON: '{"message":"..."}'
-        if (typeof data === "string") {
-            try {
-                const parsed = JSON.parse(data);
-                if (parsed?.message) return parsed.message;
-            } catch {
-                // não era JSON; segue abaixo
-            }
-
-            if (data.trim()) return data;
-        }
-
-        // Caso 3: fallback para message do erro
-        return error?.response?.data?.message || fallback;
     }
 
     async function excluirOs() {
@@ -385,7 +293,8 @@ function OrdemServicoDetalhe() {
             navigate("/ordens-servico")
 
         } catch (error) {
-            toastErro(obterMensagemErro(error, "Erro ao excluir OS"));
+            toastErro("Erro ao excluir OS")
+            console.error(error)
         }
     }
 
@@ -397,47 +306,6 @@ function OrdemServicoDetalhe() {
             setToast(null)
         }, 3000)
     }
-
-    async function salvarDescricao() {
-        try {
-            await apiPut(`/ordens-servico/${os.id}/descricao`, {
-                descricao: descricaoEditada
-            });
-
-            const atualizado = await apiGet(`/ordens-servico/${id}`);
-            setOs(atualizado);
-
-            setEditandoDescricao(false);
-            toastSucesso("Descrição atualizada com sucesso!");
-
-        } catch (error) {
-            toastErro("Erro ao atualizar descrição");
-        }
-    }
-
-    async function cancelarOs() {
-
-        const motivo = prompt("Informe o motivo do cancelamento:");
-
-        if (!motivo) return;
-
-        try {
-            await apiPut(`/ordens-servico/${os.id}/cancelar`, motivo);
-
-            const atualizado = await apiGet(`/ordens-servico/${id}`);
-            setOs(atualizado);
-
-            toastSucesso("OS cancelada com sucesso!");
-
-        } catch (error) {
-            toastErro("Erro ao cancelar OS");
-        }
-    }
-
-    const subtotalServicos = os.servicos?.reduce(
-        (total, s) => total + Number(s.valor || 0),
-        0
-    );
 
     return (
         <div style={{ maxWidth: 850, margin: "0 auto", padding: 20 }}>
@@ -481,14 +349,12 @@ function OrdemServicoDetalhe() {
                 <button
                     onClick={() => navigate('/')}
                     style={{
-                        backgroundColor: "white",
+                        backgroundColor: "#f1f5f9",
                         border: "1px solid #cbd5e1",
-                        padding: "8px 14px",
+                        padding: "6px 12px",
                         borderRadius: "6px",
                         cursor: "pointer",
-                        marginBottom: "15px",
-                        fontWeight: "500",
-                        color: "#111827"
+                        marginBottom: "15px"
                     }}
                 >
                     ← Voltar para Lista
@@ -507,75 +373,26 @@ function OrdemServicoDetalhe() {
 
                     {/* ESQUERDA */}
                     <div>
-                        
+
                         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                           {/* <h2 style={{ margin: 0 }}>OS #{os.id}</h2>*/}
+                            <h2 style={{ margin: 0 }}>OS #{os.id}</h2>
 
-                            <div>
-                                <div style={{ marginBottom: 5, color: "#6b7280", fontSize: 14 }}>
-                                    🏢 {os.oficinaNome}
-                                </div>
-
-                                <h2 style={{ margin: 0 }}>
-                                    {os.cliente?.nome}
-                                </h2>
-
-                                <div style={{ color: "#6b7280", marginTop: 4 }}>
-                                    {os.veiculo?.modelo} - {os.veiculo?.placa}
-                                </div>
-
-                            {/*    <div style={{ fontSize: 13, color: "#9ca3af" }}>*/}
-                            {/*        OS-{os.id.toString().padStart(4, "0")}*/}
-                            {/*    </div>*/}
-
-                            {/*<span*/}
-                            {/*    style={{*/}
-                            {/*        borderRadius: 20,*/}
-                            {/*        fontWeight: "bold",*/}
-                            {/*        fontSize: 13,*/}
-                            {/*        padding: "6px 14px",*/}
-                            {/*        backgroundColor:*/}
-                            {/*            os.status === STATUS_OS.ABERTO ? "#f59e0b" :*/}
-                            {/*                os.status === STATUS_OS.EM_EXECUCAO ? "#3b82f6" :*/}
-                            {/*                    "#10b981",*/}
-                            {/*        color: "white"*/}
-                            {/*    }}*/}
-                            {/*>*/}
-                            {/*    {os.status}*/}
-                                {/*</span>*/}
-
-                                <div style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 12,
-                                    flexWrap: "wrap" // 🔥 evita sobreposição
-                                }}>
-                                    <h2 style={{ margin: 0 }}>
-                                        OS-{os.id.toString().padStart(4, "0")}
-                                    </h2>
-
-                                    <span
-                                        style={{
-                                            borderRadius: 20,
-                                            fontWeight: "bold",
-                                            fontSize: 12,
-                                            padding: "4px 10px",
-                                            whiteSpace: "nowrap", // 🔥 evita quebrar
-                                            backgroundColor:
-                                                os.status === "Aberto" ? "#f59e0b" :
-                                                    os.status === "EmExecucao" ? "#3b82f6" :
-                                                        "#10b981",
-                                            color: "white"
-                                        }}
-                                    >
-                                        {os.status}
-                                    </span>
-                                </div>
+                            <span
+                                style={{
+                                    borderRadius: 20,
+                                    fontWeight: "bold",
+                                    fontSize: 13,
+                                    padding: "6px 14px",
+                                    backgroundColor:
+                                        os.status === "Aberto" ? "#f59e0b" :
+                                            os.status === "EmExecucao" ? "#3b82f6" :
+                                                "#10b981",
+                                    color: "white"
+                                }}
+                            >
+                                {os.status}
+                            </span>
                         </div>
-
-                        
-                        </div>
-
 
                         <div style={{ marginTop: 10, lineHeight: 1.6 }}>
                             {/*<div style={{*/}
@@ -615,11 +432,15 @@ function OrdemServicoDetalhe() {
                     </div>
 
                     {/* DIREITA */}
-                    <div style={{
-                        fontSize: 32,
-                        fontWeight: "bold",
-                        color: "#111827"
-                    }}>
+                    <div
+                        style={{
+                            fontSize: 28,
+                            fontWeight: "bold",
+                            color: "#111827",
+                            minWidth: 150,
+                            textAlign: "right"
+                        }}
+                    >
                         R$ {Number(os.valorTotal).toFixed(2)}
                     </div>
 
@@ -627,29 +448,34 @@ function OrdemServicoDetalhe() {
 
             <div style={{ marginTop: 10, marginBottom: 20 }}>
 
-                    {os.status === STATUS_OS.FINALIZADO ? (
+                {os.laudoGerado ? (
+                    <span style={{ color: 'green', fontWeight: 'bold' }}>
+                        ✔ Laudo já gerado
+                    </span>
 
-                        <button
-                            onClick={() => gerarLaudo()}
-                            style={{
-                                backgroundColor: '#007bff',
-                                color: 'white',
-                                padding: '8px 15px',
-                                border: 'none',
-                                borderRadius: '4px',
-                                cursor: 'pointer'
-                            }}
-                        >
-                            📄 Gerar / Visualizar Laudo
-                        </button>
+                ) : os.status === "Finalizado" ? (
 
-                    ) : (
+                    <button
+                        onClick={() => gerarLaudo()}
+                        style={{
+                            backgroundColor: '#007bff',
+                            color: 'white',
+                            padding: '8px 15px',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        📄 Gerar Laudo
+                    </button>
 
-                        <span style={{ color: 'orange', fontWeight: 'bold' }}>
-                            ⚠ Finalize a OS para gerar o laudo.
-                        </span>
+                ) : (
 
-                    )}
+                    <span style={{ color: 'orange', fontWeight: 'bold' }}>
+                        ⚠ Finalize a OS para gerar o laudo.
+                    </span>
+
+                )}
 
             </div>
 
@@ -669,30 +495,28 @@ function OrdemServicoDetalhe() {
                     {/*    Finalizado*/}
                     {/*</button>*/}
 
-                        {os.status === STATUS_OS.ABERTO && (
-                            <button
-                                onClick={() => alterarStatus(STATUS_OS.EM_EXECUCAO)}
-                                style={{
-                                    backgroundColor: "#2563eb",
-                                    color: "white",
-                                    border: "none",
-                                    padding: "8px 14px",
-                                    borderRadius: "6px",
-                                    cursor: "pointer",
-                                    fontWeight: "500"
-                                }}
+                    {os.status === "Aberto" && (
+                            <button onClick={() => alterarStatus("EmExecucao")}
+                            style={{
+                                backgroundColor: "#f1f5f9",
+                                border: "1px solid #cbd5e1",
+                                padding: "6px 12px",
+                                borderRadius: "6px",
+                                cursor: "pointer",
+                                marginBottom: "15px"
+                            }}
                             >
-                                ▶ Iniciar Execução
-                            </button>
+                            Iniciar Execução
+                        </button>
                     )}
 
-                        {os.status === STATUS_OS.EM_EXECUCAO && (
-                        <button onClick={() => alterarStatus(STATUS_OS.FINALIZADO)}>
+                    {os.status === "EmExecucao" && (
+                        <button onClick={() => alterarStatus("Finalizado")}>
                             Finalizar OS
                         </button>
                     )}
 
-                        {os.status === STATUS_OS.FINALIZADO && (
+                    {os.status === "Finalizado" && (
                         <span style={{ color: "green", fontWeight: "bold" }}>
                             OS Finalizada
                         </span>
@@ -722,54 +546,7 @@ function OrdemServicoDetalhe() {
                 </span>
             </div>
 
-                <div style={{ marginBottom: 15 }}>
-                    <strong>Descrição do Problema:</strong>
-
-                    {editandoDescricao ? (
-                        <div style={{ marginTop: 10 }}>
-                            <textarea
-                                value={descricaoEditada}
-                                onChange={e => setDescricaoEditada(e.target.value)}
-                                style={{ width: "100%", padding: 10, borderRadius: 6 }}
-                                rows={3}
-                            />
-
-                            <div style={{ marginTop: 10, display: "flex", gap: 10 }}>
-                                <button onClick={salvarDescricao()}>
-                                    💾 Salvar
-                                </button>
-
-                                <button onClick={() => setEditandoDescricao(false)}>
-                                    Cancelar
-                                </button>
-                            </div>
-                        </div>
-                    ) : (
-                        <div style={{ marginTop: 5 }}>
-                            {os.descricaoProblema || "—"}
-
-                            {!osBloqueadaEdicao && (
-                                <button
-                                    onClick={() => {
-                                        setDescricaoEditada(os.descricaoProblema || "");
-                                        setEditandoDescricao(true);
-                                    }}
-                                    style={{
-                                        marginLeft: 10,
-                                        fontSize: 12,
-                                        background: "none",
-                                        border: "none",
-                                        color: "#2563eb",
-                                        cursor: "pointer"
-                                    }}
-                                >
-                                    ✏ Editar
-                                </button>
-                            )}
-                        </div>
-                    )}
-                </div>
-
+            <p><strong>Descrição do Problema:</strong> {os.descricaoProblema}</p>
             <p><strong>Data de Abertura:</strong> {new Date(os.dataAbertura).toLocaleString()}</p>
 
             {/*<p><strong>Total:</strong> R$ {os.valorTotal}</p>*/}
@@ -820,102 +597,6 @@ function OrdemServicoDetalhe() {
                     </div>
                 </div>
 
-                <div style={{
-                    marginTop: "20px",
-                    padding: "15px",
-                    border: "1px solid #ddd",
-                    borderRadius: "8px",
-                    backgroundColor: "#f8f9fa"
-                }}>
-                    <h4>💰 Registrar Pagamento</h4>
-
-                    <div style={{ display: "flex", gap: 10 }}>
-
-                        <select
-                            value={formaPagamento}
-                            onChange={e => setFormaPagamento(e.target.value)}
-                            disabled={!podeRegistrarPagamento}
-                            title={!podeRegistrarPagamento ? "Não é possível registrar pagamento para OS cancelada." : ""}
-                            style={{
-                                width: "100%",
-                                padding: 8,
-                                marginBottom: 10,
-                                borderRadius: 6,
-                                border: "1px solid #ccc"
-                            }}
-                        >
-                            <option value="">Selecione a forma</option>
-                            <option value="Dinheiro">Dinheiro</option>
-                            <option value="Cartao">Cartão</option>
-                            <option value="Pix">Pix</option>
-                        </select>
-
-                        <input
-                            type="number"
-                            placeholder="Valor do pagamento"
-                            value={valorPagamento}
-                            onChange={e => setValorPagamento(e.target.value)}
-                            disabled={!podeRegistrarPagamento}
-                            title={!podeRegistrarPagamento ? "Não é possível registrar pagamento para OS cancelada." : ""}
-                            style={{
-                                flex: 1,
-                                padding: 8,
-                                borderRadius: 6,
-                                border: "1px solid #ccc"
-                            }}
-                        />
-
-                        <button
-                        
-                            //disabled={!podeRegistrarPagamento}
-                            title={!podeRegistrarPagamento ? "Não é possível registrar pagamento para OS cancelada." : ""}
-                            onClick={async () => {
-                                try {
-                                    if (!podeRegistrarPagamento) {
-                                        toastErro("Não é possível registrar pagamento para OS cancelada.");
-                                        return;
-                                    }
-
-                                    if (!formaPagamento) {
-                                        toastErro("Selecione a forma de pagamento");
-                                        return;
-                                    }
-
-                                    if (!valorPagamento || isNaN(parseFloat(valorPagamento))) {
-                                        toastErro("Informe um valor válido");
-                                        return;
-                                    }
-
-                                    await apiPost(`/ordens-servico/${os.id}/registrar-pagamento`, {
-                                        //ordemServicoId: os.id,
-                                        valor: parseFloat(valorPagamento),
-                                        formaPagamento: formaPagamento
-                                    });
-
-                                    const atualizado = await apiGet(`/ordens-servico/${id}`);
-                                    setOs(atualizado);
-                                    setValorPagamento("");
-
-                                    toastSucesso("Pagamento registrado!");
-
-                                } catch (err) {
-                                    toastErro("Erro ao registrar pagamento");
-                                }
-                            }}
-                            style={{
-                                backgroundColor: osBloqueadaEdicao ? "#6c757d" : "#007bff",
-                                color: "white",
-                                border: "none",
-                                padding: "8px 12px",
-                                borderRadius: 6,
-                                cursor: "pointer"
-                            }}
-                        >
-                            Registrar
-                        </button>
-                    </div>
-                </div>
-
             <hr />
 
             {/* 👤 Cliente */}
@@ -962,21 +643,19 @@ function OrdemServicoDetalhe() {
                         <p><strong>Marca:</strong> {os.veiculo?.marca}</p>
                         <p><strong>Modelo:</strong> {os.veiculo?.modelo}</p>
                         <p><strong>Ano:</strong> {os.veiculo?.ano}</p>
-                        <p><strong>Quilometragem:</strong> {os.veiculo?.quilometragem?.toLocaleString()}</p>
+                        <p><strong>Quilometragem:</strong> {os.veiculo?.quilometragem}</p>
                     </div>
 
                 </div>
 
-            {/*<div*/}
-            {/*    style={{*/}
-            {/*        padding: "15px",*/}
-            {/*        border: "1px solid #ddd",*/}
-            {/*        borderRadius: "8px",*/}
-            {/*        marginBottom: "15px"*/}
-            {/*    }}*/}
-                {/*    >*/}
-
-                <div style={sectionStyle}>
+            <div
+                style={{
+                    padding: "15px",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    marginBottom: "15px"
+                }}
+            >
                 <h3>🔧 Serviços</h3>
                 {os.servicos?.length === 0 ? (
                     <p>Nenhum serviço cadastrado.</p>
@@ -1021,20 +700,11 @@ function OrdemServicoDetalhe() {
                                                 R$ {Number(s.valor).toFixed(2)}
                                             </span>
 
-                                            {!os.laudoGerado && os.status !== STATUS_OS.FINALIZADO && (
+                                            {!os.laudoGerado && os.status !== "Finalizado" && (
                                                 <button
-                                                    onClick={() => {
-                                                        if (osBloqueadaEdicao) {
-                                                            toastErro("Esta OS não pode ser alterada");
-                                                            return;
-                                                        }
-
-                                                        removerServico(s.id);
-                                                    }}
-                                                    //disabled={osBloqueadaEdicao}
-                                                    title={osBloqueadaEdicao ? "Esta OS não pode ser alterada" : ""}
+                                                    onClick={() => removerServico(s.id)}
                                                     style={{
-                                                        backgroundColor: osBloqueadaEdicao ? "#6c757d" : "#007bff",
+                                                        backgroundColor: "#dc3545",
                                                         color: "white",
                                                         border: "none",
                                                         borderRadius: "4px",
@@ -1049,26 +719,10 @@ function OrdemServicoDetalhe() {
                                     </div>
                                 ))
                             )}
-                            </div>
-
-
-
-
+                        </div>
 
                 )}
-                </div>
-
-                <div
-                    style={{
-                        marginTop: "10px",
-                        padding: "10px",
-                        backgroundColor: "#f8f9fa",
-                        borderRadius: "6px",
-                        fontWeight: "bold"
-                    }}
-                >
-                    Subtotal Serviços: R$ {subtotalServicos.toFixed(2)}
-                </div>
+            </div>
 
             {/*<h4>Adicionar Serviço</h4>*/}
 
@@ -1095,58 +749,44 @@ function OrdemServicoDetalhe() {
             {/*    Adicionar*/}
             {/*</button>*/}
 
-            {/*<div*/}
-            {/*    style={{*/}
-            {/*        marginTop: "20px",*/}
-            {/*        padding: "15px",*/}
-            {/*        border: "1px solid #ddd",*/}
-            {/*        borderRadius: "8px",*/}
-            {/*        backgroundColor: "#f8f9fa"*/}
-            {/*    }}*/}
-                {/*>*/}
-
-                <div style={sectionStyle}>
+            <div
+                style={{
+                    marginTop: "20px",
+                    padding: "15px",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    backgroundColor: "#f8f9fa"
+                }}
+            >
                 <h4 style={{ marginBottom: "10px" }}>➕ Adicionar Serviço</h4>
 
                 <div style={{ display: "flex", gap: "10px" }}>
                     <input
                         type="text"
-                            placeholder="Descrição"
-                            disabled={osBloqueadaEdicao}
-                            value={descricaoServico}
-                            onChange={e => setDescricaoServico(e.target.value)}
-                            style={{ flex: 2, padding: "8px" }}
+                        placeholder="Descrição"
+                        value={descricaoServico}
+                        onChange={e => setDescricaoServico(e.target.value)}
+                        style={{ flex: 2, padding: "8px" }}
                     />
 
                     <input
                         type="number"
-                            placeholder="Valor"
-                            disabled={osBloqueadaEdicao}
-                            value={valorServico}
-                            onChange={e => setValorServico(e.target.value)}
-                            style={{ flex: 1, padding: "8px" }}
+                        placeholder="Valor"
+                        value={valorServico}
+                        onChange={e => setValorServico(e.target.value)}
+                        style={{ flex: 1, padding: "8px" }}
                     />
 
                     <button
-                            //onClick={adicionarServico}
-                            onClick={() => {
-                                if (osBloqueadaEdicao) {
-                                    toastErro("Esta OS não pode ser alterada");
-                                    return;
-                                }
-
-                                adicionarServico();
-                            }}
-                            title={osBloqueadaEdicao ? "Esta OS não pode ser alterada" : ""}
-                            style={{
-                                padding: "8px 15px",
-                                backgroundColor: osBloqueadaEdicao ? "#6c757d" : "#007bff",
-                                color: "white",
-                                border: "none",
-                                borderRadius: "5px",
-                                cursor: osBloqueadaEdicao ? "not-allowed" : "pointer",
-                                opacity: osBloqueadaEdicao ? 0.7 : 1
-                            }}
+                        onClick={adicionarServico}
+                        style={{
+                            padding: "8px 15px",
+                            backgroundColor: "#007bff",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "5px",
+                            cursor: "pointer"
+                        }}
                     >
                         + Adicionar
                     </button>
@@ -1184,19 +824,9 @@ function OrdemServicoDetalhe() {
 
                                 {!os.laudoGerado && (
                                     <button
-                                        onClick={() => {
-                                            if (osBloqueadaEdicao) {
-                                                toastErro("Esta OS não pode ser alterada");
-                                                return;
-                                            }
-
-                                            removerPeca(p.id);
-                                        }}
-                                        //onClick={() => removerPeca(p.id)}
-                                        //disabled={osBloqueadaEdicao}
-                                        title={osBloqueadaEdicao ? "Esta OS não pode ser alterada" : ""}
+                                        onClick={() => removerPeca(p.id)}
                                         style={{
-                                            backgroundColor: osBloqueadaEdicao ? "#6c757d" : "#007bff",
+                                            backgroundColor: "#dc3545",
                                             color: "white",
                                             border: "none",
                                             borderRadius: "4px",
@@ -1213,38 +843,34 @@ function OrdemServicoDetalhe() {
                 )}
             </div>
 
-            {/*<div*/}
-            {/*    style={{*/}
-            {/*        marginTop: "10px",*/}
-            {/*        padding: "10px",*/}
-            {/*        backgroundColor: "#f8f9fa",*/}
-            {/*        borderRadius: "6px",*/}
-            {/*        fontWeight: "bold"*/}
-            {/*    }}*/}
-                {/*>*/}
-
-                <div style={sectionStyle}>
+            <div
+                style={{
+                    marginTop: "10px",
+                    padding: "10px",
+                    backgroundColor: "#f8f9fa",
+                    borderRadius: "6px",
+                    fontWeight: "bold"
+                }}
+            >
                 Subtotal Peças: R$ {Number(os.totalPecas).toFixed(2)}
             </div>
 
-            {/*<div*/}
-            {/*    style={{*/}
-            {/*        marginTop: "20px",*/}
-            {/*        padding: "15px",*/}
-            {/*        border: "1px solid #ddd",*/}
-            {/*        borderRadius: "8px",*/}
-            {/*        backgroundColor: "#f8f9fa"*/}
-            {/*    }}*/}
-                {/*>*/}
-                <div style={sectionStyle}>
+            <div
+                style={{
+                    marginTop: "20px",
+                    padding: "15px",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    backgroundColor: "#f8f9fa"
+                }}
+            >
                 <h4 style={{ marginBottom: "10px" }}>➕ Adicionar Peça</h4>
 
                 <div style={{ display: "flex", gap: "10px" }}>
                     <input
                         type="text"
                         placeholder="Descrição"
-                            value={descricaoPeca}
-                            disabled={osBloqueadaEdicao}
+                        value={descricaoPeca}
                         onChange={e => setDescricaoPeca(e.target.value)}
                         style={{ flex: 2, padding: "8px" }}
                     />
@@ -1252,8 +878,7 @@ function OrdemServicoDetalhe() {
                     <input
                         type="number"
                         placeholder="Qtd"
-                            value={quantidadePeca}
-                            disabled={osBloqueadaEdicao}
+                        value={quantidadePeca}
                         onChange={e => setQuantidadePeca(e.target.value)}
                         style={{ flex: 1, padding: "8px" }}
                     />
@@ -1261,32 +886,20 @@ function OrdemServicoDetalhe() {
                     <input
                         type="number"
                         placeholder="Valor Unit."
-                            value={valorPeca}
-                            disabled={osBloqueadaEdicao}
+                        value={valorPeca}
                         onChange={e => setValorPeca(e.target.value)}
                         style={{ flex: 1, padding: "8px" }}
                     />
 
                     <button
-                            //onClick={adicionarPeca}
-                            onClick={() => {
-                                if (osBloqueadaEdicao) {
-                                    toastErro("Esta OS não pode ser alterada");
-                                    return;
-                                }
-
-                                adicionarPeca();
-                            }}
-                            //disabled={osBloqueadaEdicao}
-                            //title={osBloqueadaEdicao ? "Esta OS está bloqueada para edição." : ""}
+                        onClick={adicionarPeca}
                         style={{
                             padding: "8px 15px",
-                            backgroundColor: osBloqueadaEdicao ? "#6c757d" : "#007bff",
+                            backgroundColor: "#007bff",
                             color: "white",
                             border: "none",
                             borderRadius: "5px",
-                            cursor: osBloqueadaEdicao ? "not-allowed" : "pointer",
-                            opacity: osBloqueadaEdicao ? 0.7 : 1
+                            cursor: "pointer"
                         }}
                     >
                         + Adicionar
@@ -1296,50 +909,14 @@ function OrdemServicoDetalhe() {
 
             <hr />
 
-            {/*<div*/}
-            {/*    style={{*/}
-            {/*        padding: "15px",*/}
-            {/*        border: "1px solid #ddd",*/}
-            {/*        borderRadius: "8px",*/}
-            {/*        marginBottom: "15px"*/}
-            {/*    }}*/}
-                {/*>*/}
-                <div style={sectionStyle}>
-
-                    <div style={sectionStyle}>
-                        <h3>💳 Pagamentos</h3>
-
-                        {!os.pagamentos || os.pagamentos.length === 0 ? (
-                            <p>Nenhum pagamento registrado.</p>
-                        ) : (
-                            os.pagamentos.map((p, index) => (
-                                <div
-                                    key={index}
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        padding: "10px",
-                                        borderBottom: "1px solid #eee"
-                                    }}
-                                >
-                                    <div>
-                                        <strong>
-                                            R$ {Number(p.valor).toFixed(2)}
-                                        </strong>
-                                    </div>
-
-                                    <div style={{ color: "#6b7280" }}>
-                                        {p.formaPagamento}
-                                    </div>
-
-                                    <div style={{ fontSize: "0.85rem", color: "#9ca3af" }}>
-                                        {new Date(p.dataPagamento).toLocaleString()}
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                    </div>
-
+            <div
+                style={{
+                    padding: "15px",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    marginBottom: "15px"
+                }}
+            >
                 {/* 🕓 Histórico */}
                 <h3>Histórico</h3>
                 {os.historico?.length === 0 ? (
@@ -1353,57 +930,18 @@ function OrdemServicoDetalhe() {
                         ))}
                     </ul>
                 )}
-                </div>
-
-                {os.status !== "Finalizado" && os.status !== "Cancelado" && (
-                <button
-                        //onClick={cancelarOs}
-                        onClick={() => {
-                            if (os.status === "Cancelado") {
-                                toastErro("OS já esta cancelada.");
-                                return;
-                            }
-
-                            cancelarOs();
-                        }}
-                        title={osBloqueadaEdicao ? "OS já esta cancelada." : ""}
-                    //disabled={os.status === "Cancelado"}
-                    style={{
-                        marginTop: "10px",
-                        marginRight: "5px",
-                        backgroundColor: "#f59e0b",
-                        color: "white",
-                        padding: "8px 15px",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer"
-                    }}
-                >
-                    ⚠ Cancelar OS
-                </button>
-                )}
+            </div>
 
             <button
-                    //onClick={excluirOs}
-                    onClick={() => {
-                        if (osBloqueadaEdicao) {
-                            toastErro("Esta OS não pode ser alterada");
-                            return;
-                        }
-
-                        excluirOs();
-                    }}
-                    //disabled={osBloqueadaEdicao}
-                    title={osBloqueadaEdicao ? "Esta OS não pode ser alterada" : ""}
+                onClick={excluirOs}
                 style={{
                     marginTop: "15px",
-                    backgroundColor: osBloqueadaEdicao ? "#6c757d" : "#dc3545",
+                    backgroundColor: "#dc3545",
                     color: "white",
                     padding: "8px 15px",
                     border: "none",
                     borderRadius: "5px",
-                    cursor: osBloqueadaEdicao ? "not-allowed" : "pointer",
-                    opacity: osBloqueadaEdicao ? 0.7 : 1
+                    cursor: "pointer"
                 }}
             >
                 🗑 Excluir OS
