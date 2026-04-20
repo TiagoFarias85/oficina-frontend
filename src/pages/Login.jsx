@@ -95,6 +95,7 @@ function Login() {
                     </div>
 
                     <button
+                        type="submit"
                         disabled={loading}
                         style={{
                             width: "100%",
