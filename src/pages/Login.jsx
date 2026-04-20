@@ -63,7 +63,12 @@ function Login() {
                     🔧 Sistema Oficina
                 </h2>
 
-                <form onSubmit={handleLogin}>
+             {/*   <form onSubmit={handleLogin}>*/}
+
+                    <form onSubmit={(e) => {
+                        console.log("SUBMIT DISPARADO");
+                        handleLogin(e);
+                    }}>
 
                     <div style={{ marginBottom: "15px" }}>
                         <input
