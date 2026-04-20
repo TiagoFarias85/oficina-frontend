@@ -63,7 +63,8 @@ function Login() {
                     🔧 Sistema Oficina
                 </h2>
 
-                <form onSubmit={handleLogin}>
+                {/*<form onSubmit={handleLogin}>*/}
+                <div>
 
                 {/*<form onSubmit={(e) => {*/}
                 {/*    e.preventDefault();*/}
@@ -121,7 +122,8 @@ function Login() {
                         {loading ? "Entrando..." : "Entrar"}
                     </button>
 
-                </form>
+              {/*  </form>*/}
+            </div>
 
                 {erro && (
                     <div
