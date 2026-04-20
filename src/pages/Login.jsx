@@ -34,7 +34,17 @@ function Login() {
             }
 
         } catch (err) {
-            setErro(err.message || "Erro ao fazer login");
+            //setErro(err.message || "Erro ao fazer login");
+            let mensagem = "Erro ao fazer login";
+
+            try {
+                const data = JSON.parse(err.message);
+                mensagem = data.message || mensagem;
+            } catch {
+                mensagem = err.message || mensagem;
+            }
+
+            setErro(mensagem);
         } finally {
             setLoading(false);
         }
