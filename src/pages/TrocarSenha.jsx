@@ -36,28 +36,30 @@ function TrocarSenha() {
     }
 
     return (
-
-        { toast && (
-            <div
-                style={{
-                    position: "fixed",
-                    top: "20px",
-                    right: "20px",
-                    padding: "15px 20px",
-                    borderRadius: "8px",
-                    color: "#fff",
-                    fontWeight: "bold",
-                    zIndex: 9999,
-                    backgroundColor:
-                        toast.type === "success" ? "#28a745" : "#dc3545",
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
-                }}
-            >
-                {toast.message}
-            </div>
-        )}
+              
 
         <div>
+
+            {toast && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: "20px",
+                        right: "20px",
+                        padding: "15px 20px",
+                        borderRadius: "8px",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        zIndex: 9999,
+                        backgroundColor:
+                            toast.type === "success" ? "#28a745" : "#dc3545",
+                        boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
+                    }}
+                >
+                    {toast.message}
+                </div>
+            )}
+
             <h2>Trocar senha</h2>
 
             <input
