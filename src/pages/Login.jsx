@@ -60,9 +60,10 @@ function Login() {
             //}
 
             //setErro(mensagem);
-        } finally {
-            setLoading(false);
         }
+        //finally {
+        //    setLoading(false);
+        //}
     }
 
     return (
