@@ -21,7 +21,7 @@ function Login() {
 
         e.preventDefault();
         setLoading(true);
-        //setErro(null);
+        setErro(null);
 
         try {
             const data = await apiPost("/auth/login", { email, senha });
@@ -44,7 +44,12 @@ function Login() {
             }
 
         } catch (err) {
-            setErro(err.message || "Erro ao fazer login");
+            //setErro(err.message || "Erro ao fazer login");
+
+            console.log("SETANDO ERRO");
+
+            setErro("ERRO FIXO TESTE");
+
             //let mensagem = "Erro ao fazer login";
 
             //try {
