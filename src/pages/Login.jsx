@@ -34,7 +34,11 @@ function Login() {
         //setErro(null);
 
         try {
-            const data = await apiPost("/auth/login", { loginInput, senha });
+            //const data = await apiPost("/auth/login", { loginInput, senha });
+            const data = await apiPost("/auth/login", {
+                login: loginInput,
+                senha
+            });
 
             if (!data?.token) {
                 throw new Error("login ou senha inválidos");
