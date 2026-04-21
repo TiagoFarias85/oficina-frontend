@@ -20,7 +20,7 @@ function Login() {
     async function handleLogin(e) {
 
         if (loading) return;
-        console.log("LOGIN DISPARADO", Date.now());
+        //console.log("LOGIN DISPARADO", Date.now());
 
         if (!email || !senha) {
             setErro("Preencha email e senha");

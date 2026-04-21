@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import permissions from "./config/permissions";
 import { Toaster } from "react-hot-toast";
 import OrdensServicoPorVeiculo from "./pages/ordens/OrdensServicoPorVeiculo";
+import TrocarSenha from "./pages/TrocarSenha";
 
 function App() {
 
@@ -92,6 +93,8 @@ function App() {
                     <Route path="/usuarios/:id" element={<EditarUsuario />} />
 
                     <Route path="/veiculos/:id/ordens-servico" element={<OrdensServicoPorVeiculo />} />
+
+                    <Route path="/trocar-senha" element={<TrocarSenha />} />
 
                 </Route>
 

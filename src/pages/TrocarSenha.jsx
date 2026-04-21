@@ -9,12 +9,16 @@ function TrocarSenha() {
     const navigate = useNavigate();
 
     async function salvar() {
+        try {
+            await apiPatch("/auth/trocar-senha", { senha });
 
-        await apiPatch("/auth/trocar-senha", { senha });
+            toastSucesso("Senha alterada com sucesso");
 
-        toastSucesso("Senha alterada com sucesso");
-
-        navigate("/dashboard");
+            navigate("/dashboard");
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao trocar senha");
+        }
     }
 
     return (
