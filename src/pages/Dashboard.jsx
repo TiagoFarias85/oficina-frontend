@@ -60,6 +60,9 @@ function Dashboard() {
 
         //</div>
 
+        <button onClick={() => navigate("/alterar-senha")}>
+                Alterar senha
+            </button>
 
         <div style={{
             display: "grid",
@@ -67,9 +70,7 @@ function Dashboard() {
             gap: "20px"
         }}>
 
-            <button onClick={() => navigate("/alterar-senha")}>
-                Alterar senha
-            </button>
+            
 
             <div
                 style={cardStyle}
