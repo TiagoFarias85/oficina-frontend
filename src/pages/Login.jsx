@@ -7,7 +7,6 @@ function Login() {
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
-
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState(null);
@@ -20,8 +19,16 @@ function Login() {
         setErro(null);
 
         try {
-
             const data = await apiPost("/auth/login", { email, senha });
+
+            if (!data?.token) {
+                throw new Error("Email ou senha inválidos");
+            }
+
+            if (!email || !senha) {
+                setErro("Preencha email e senha");
+                return;
+            }
 
             login(data.token, data.nome, data.perfil);
 
@@ -32,17 +39,17 @@ function Login() {
             }
 
         } catch (err) {
-            //setErro(err.message || "Erro ao fazer login");
-            let mensagem = "Erro ao fazer login";
+            setErro(err.message || "Erro ao fazer login");
+            //let mensagem = "Erro ao fazer login";
 
-            try {
-                const data = JSON.parse(err.message);
-                mensagem = data.message || mensagem;
-            } catch {
-                mensagem = err.message || mensagem;
-            }
+            //try {
+            //    const data = JSON.parse(err.message);
+            //    mensagem = data.message || mensagem;
+            //} catch {
+            //    mensagem = err.message || mensagem;
+            //}
 
-            setErro(mensagem);
+            //setErro(mensagem);
         } finally {
             setLoading(false);
         }
