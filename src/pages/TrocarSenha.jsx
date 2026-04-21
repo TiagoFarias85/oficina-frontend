@@ -10,7 +10,7 @@ function TrocarSenha() {
 
     async function salvar() {
         try {
-            await apiPatch("/auth/trocar-senha", { senha });
+            await apiPatch("/auth/trocar-senha", { Senha: senha });
 
             toastSucesso("Senha alterada com sucesso");
 
