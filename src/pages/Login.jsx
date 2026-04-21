@@ -2,8 +2,13 @@
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { apiPost } from "../services/api";
+import { useEffect } from "react";
 
 function Login() {
+
+    useEffect(() => {
+        console.log("MONTANDO LOGIN");
+    }, []);
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -56,9 +61,7 @@ function Login() {
     }
 
     return (
-        useEffect(() => {
-            console.log("MONTANDO LOGIN");
-        }, []);
+        
         <div
             style={{
                 height: "100vh",
