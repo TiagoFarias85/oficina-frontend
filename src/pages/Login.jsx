@@ -66,9 +66,9 @@ function Login() {
 
             //setErro(mensagem);
         }
-        //finally {
-        //    setLoading(false);
-        //}
+        finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -135,7 +135,7 @@ function Login() {
                             }}
                         />
                     </div>
-                    <div id="erro-login" style={{ color: "red" }}></div>
+                    
                     <button
                         //type="submit"
                         type="button"
