@@ -2,13 +2,13 @@
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { apiPost } from "../services/api";
-import { useEffect } from "react";
+/*import { useEffect } from "react";*/
 
 function Login() {
 
-    useEffect(() => {
-        console.log("MONTANDO LOGIN");
-    }, []);
+    //useEffect(() => {
+    //    console.log("MONTANDO LOGIN");
+    //}, []);
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -18,10 +18,14 @@ function Login() {
     const [loading, setLoading] = useState(false);
 
     async function handleLogin(e) {
+
+        if (loading) return;
         console.log("LOGIN DISPARADO", Date.now());
-        e.preventDefault();
         setLoading(true);
-        setErro(null);
+
+        //e.preventDefault();
+        //setLoading(true);
+        //setErro(null);
 
         try {
             const data = await apiPost("/auth/login", { email, senha });
@@ -44,7 +48,7 @@ function Login() {
             }
 
         } catch (err) {
-            document.getElementById("erro-login").innerText = "Email ou senha inválidos";
+            setErro("Email ou senha inválidos");
             //setErro(err.message || "Erro ao fazer login");
 
             //console.log("SETANDO ERRO");
