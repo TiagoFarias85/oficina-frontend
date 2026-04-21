@@ -21,6 +21,12 @@ function Login() {
 
         if (loading) return;
         console.log("LOGIN DISPARADO", Date.now());
+
+        if (!email || !senha) {
+            setErro("Preencha email e senha");
+            return;
+        }
+
         setLoading(true);
 
         //e.preventDefault();
@@ -32,11 +38,6 @@ function Login() {
 
             if (!data?.token) {
                 throw new Error("Email ou senha inválidos");
-            }
-
-            if (!email || !senha) {
-                setErro("Preencha email e senha");
-                return;
             }
 
             login(data.token, data.nome, data.perfil);
