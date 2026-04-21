@@ -12,7 +12,8 @@ function Login() {
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
+    //const [email, setEmail] = useState("");
+    const [login, setLogin] = useState("");
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -106,10 +107,10 @@ function Login() {
 
                     <div style={{ marginBottom: "15px" }}>
                         <input
-                            type="email"
+                            //type="email"
                             placeholder="Login ou Email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            value={login}
+                            onChange={e => setLogin(e.target.value)}
                             required
                             style={{
                                 width: "100%",
