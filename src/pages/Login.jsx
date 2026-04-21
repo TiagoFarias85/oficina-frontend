@@ -20,7 +20,6 @@ function Login() {
     async function handleLogin(e) {
 
         if (loading) return;
-        //console.log("LOGIN DISPARADO", Date.now());
 
         if (!email || !senha) {
             setErro("Preencha email e senha");
@@ -34,10 +33,10 @@ function Login() {
         //setErro(null);
 
         try {
-            const data = await apiPost("/auth/login", { email, senha });
+            const data = await apiPost("/auth/login", { login, senha });
 
             if (!data?.token) {
-                throw new Error("Email ou senha inválidos");
+                throw new Error("login ou senha inválidos");
             }
 
             login(data.token, data.nome, data.perfil);
@@ -49,7 +48,7 @@ function Login() {
             }
 
         } catch (err) {
-            setErro("Email ou senha inválidos");
+            setErro("login ou senha inválidos");
             //setErro(err.message || "Erro ao fazer login");
 
             //console.log("SETANDO ERRO");
@@ -108,7 +107,7 @@ function Login() {
                     <div style={{ marginBottom: "15px" }}>
                         <input
                             type="email"
-                            placeholder="Email"
+                            placeholder="Login ou Email"
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             required
