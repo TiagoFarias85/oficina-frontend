@@ -2,13 +2,13 @@
 import { apiPatch } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { toastSucesso } from "../utils/toast";
-const [loading, setLoading] = useState(false);
 
 function TrocarSenha() {
 
     const [senha, setSenha] = useState("");
     const navigate = useNavigate();
     const [toast, setToast] = useState(null);
+    const [loading, setLoading] = useState(false);  
 
     async function salvar() {
         try {
