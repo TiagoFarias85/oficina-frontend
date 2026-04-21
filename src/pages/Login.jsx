@@ -18,7 +18,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
 
     async function handleLogin(e) {
-
+        console.log("LOGIN DISPARADO", Date.now());
         e.preventDefault();
         setLoading(true);
         setErro(null);
@@ -44,11 +44,12 @@ function Login() {
             }
 
         } catch (err) {
+            document.getElementById("erro-login").innerText = "Email ou senha inválidos";
             //setErro(err.message || "Erro ao fazer login");
 
-            console.log("SETANDO ERRO");
+            //console.log("SETANDO ERRO");
 
-            setErro("ERRO FIXO TESTE");
+            //setErro("ERRO FIXO TESTE");
 
             //let mensagem = "Erro ao fazer login";
 
@@ -130,7 +131,7 @@ function Login() {
                             }}
                         />
                     </div>
-
+                    <div id="erro-login" style={{ color: "red" }}></div>
                     <button
                         //type="submit"
                         type="button"
