@@ -13,7 +13,7 @@ function Login() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     //const [email, setEmail] = useState("");
-    const [login, setLogin] = useState("");
+    const [loginInput, setLoginInput] = useState("");
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -22,8 +22,8 @@ function Login() {
 
         if (loading) return;
 
-        if (!email || !senha) {
-            setErro("Preencha email e senha");
+        if (!loginInput || !senha) {
+            setErro("Preencha login/email e senha");
             return;
         }
 
@@ -34,7 +34,7 @@ function Login() {
         //setErro(null);
 
         try {
-            const data = await apiPost("/auth/login", { login, senha });
+            const data = await apiPost("/auth/login", { loginInput, senha });
 
             if (!data?.token) {
                 throw new Error("login ou senha inválidos");
@@ -109,8 +109,8 @@ function Login() {
                         <input
                             //type="email"
                             placeholder="Login ou Email"
-                            value={login}
-                            onChange={e => setLogin(e.target.value)}
+                            value={loginInput}
+                            onChange={e => setLoginInput(e.target.value)}
                             required
                             style={{
                                 width: "100%",
