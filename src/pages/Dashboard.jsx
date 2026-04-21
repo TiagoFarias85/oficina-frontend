@@ -60,10 +60,6 @@ function Dashboard() {
 
         //</div>
 
-        <button onClick={() => navigate("/alterar-senha")}>
-                Alterar senha
-            </button>
-
         <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
@@ -106,6 +102,10 @@ function Dashboard() {
                     R$ {dados.faturamentoMes.toFixed(2)}
                 </div>
             </div>
+
+            <button onClick={() => navigate("/alterar-senha")}>
+                Alterar senha
+            </button>
 
         </div>
 
