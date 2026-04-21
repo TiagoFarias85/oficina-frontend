@@ -67,6 +67,10 @@ function Dashboard() {
             gap: "20px"
         }}>
 
+            <button onClick={() => navigate("/alterar-senha")}>
+                Alterar senha
+            </button>
+
             <div
                 style={cardStyle}
                 onClick={() => navigate("/ordens-servico?filtro=hoje")}
