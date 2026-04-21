@@ -7,9 +7,15 @@ function TrocarSenha() {
 
     const [senha, setSenha] = useState("");
     const navigate = useNavigate();
+    const [toast, setToast] = useState(null);
 
     async function salvar() {
         try {
+            if (!senha || senha.length < 6) {
+                showToast("A senha deve ter pelo menos 6 caracteres", "error")
+                return;
+            }
+
             await apiPatch("/auth/trocar-senha", { Senha: senha });
 
             toastSucesso("Senha alterada com sucesso");
@@ -17,8 +23,17 @@ function TrocarSenha() {
             navigate("/dashboard");
         } catch (error) {
             console.error(error);
-            alert("Erro ao trocar senha");
+            showToast("Erro ao trocar senha", "error")
         }
+    }
+
+    function showToast(message, type = "success") {
+
+        setToast({ message, type })
+
+        setTimeout(() => {
+            setToast(null)
+        }, 3000)
     }
 
     return (
