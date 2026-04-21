@@ -16,7 +16,7 @@ function Login() {
 
         e.preventDefault();
         setLoading(true);
-        setErro(null);
+        //setErro(null);
 
         try {
             const data = await apiPost("/auth/login", { email, senha });
