@@ -56,6 +56,9 @@ function Login() {
     }
 
     return (
+        useEffect(() => {
+            console.log("MONTANDO LOGIN");
+        }, []);
         <div
             style={{
                 height: "100vh",
