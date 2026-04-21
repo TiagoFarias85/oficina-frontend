@@ -28,15 +28,35 @@ function TrocarSenha() {
     }
 
     function showToast(message, type = "success") {
-
-        setToast({ message, type })
+        setToast({ message, type });
 
         setTimeout(() => {
-            setToast(null)
-        }, 3000)
+            setToast(null);
+        }, 3000);
     }
 
     return (
+
+        { toast && (
+            <div
+                style={{
+                    position: "fixed",
+                    top: "20px",
+                    right: "20px",
+                    padding: "15px 20px",
+                    borderRadius: "8px",
+                    color: "#fff",
+                    fontWeight: "bold",
+                    zIndex: 9999,
+                    backgroundColor:
+                        toast.type === "success" ? "#28a745" : "#dc3545",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.2)"
+                }}
+            >
+                {toast.message}
+            </div>
+        )}
+
         <div>
             <h2>Trocar senha</h2>
 
