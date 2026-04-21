@@ -299,12 +299,13 @@ function OrdemServicoDetalhe() {
     }
 
     function showToast(message, type = "success") {
+        setToast({ message, type });
 
-        setToast({ message, type })
+        const timer = setTimeout(() => {
+            setToast(null);
+        }, 3000);
 
-        setTimeout(() => {
-            setToast(null)
-        }, 3000)
+        return () => clearTimeout(timer);
     }
 
     return (

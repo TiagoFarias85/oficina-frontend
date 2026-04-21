@@ -2,6 +2,7 @@
 import { apiPatch } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { toastSucesso } from "../utils/toast";
+const [loading, setLoading] = useState(false);
 
 function TrocarSenha() {
 
@@ -16,6 +17,8 @@ function TrocarSenha() {
                 return;
             }
 
+            setLoading(true);
+
             await apiPatch("/auth/trocar-senha", { Senha: senha });
 
             toastSucesso("Senha alterada com sucesso");
@@ -24,15 +27,19 @@ function TrocarSenha() {
         } catch (error) {
             console.error(error);
             showToast("Erro ao trocar senha", "error")
+        } finally {
+            setLoading(false);
         }
     }
 
     function showToast(message, type = "success") {
         setToast({ message, type });
 
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             setToast(null);
         }, 3000);
+
+        return () => clearTimeout(timer);
     }
 
     return (
@@ -67,10 +74,14 @@ function TrocarSenha() {
                 placeholder="Nova senha"
                 value={senha}
                 onChange={e => setSenha(e.target.value)}
+                minLength={6}
             />
 
-            <button onClick={salvar}>
-                Salvar
+            {/*<button onClick={salvar} disabled={!senha || senha.length < 6}>*/}
+            {/*    Salvar*/}
+            {/*</button>*/}
+            <button onClick={salvar} disabled={loading}>
+                {loading ? "Salvando..." : "Salvar"}
             </button>
         </div>
     );
