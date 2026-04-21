@@ -1,7 +1,7 @@
 ﻿import { useState } from "react";
 import { apiPatch } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { toastSucesso } from "../../utils/toast";
+import { toastSucesso } from "../utils/toast";
 
 function TrocarSenha() {
 
