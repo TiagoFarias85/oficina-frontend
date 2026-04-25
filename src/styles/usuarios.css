@@ -121,3 +121,12 @@ tr:hover {
     display: flex;
     gap: 8px;
 }
+
+.sidebar-link {
+    transition: all 0.2s ease;
+}
+
+    .sidebar-link:hover {
+        background-color: #f3f4f6;
+        transform: translateX(2px);
+    }

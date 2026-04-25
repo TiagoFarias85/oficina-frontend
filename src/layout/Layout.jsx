@@ -2,7 +2,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FiHome, FiUsers, FiTruck, FiFileText, FiLogOut, FiSettings } from "react-icons/fi";
-
+import "../styles/usuario.css";
 import BuscaPlaca from "../components/BuscaPlaca";
 import permissions from "../config/permissions";
 
@@ -54,36 +54,36 @@ function Layout() {
 
                 <nav style={{ flex: 1 }}>
                 
-                    <NavLink to="/dashboard" style={linkStyle}>
+                    <NavLink to="/dashboard" style={linkStyle} className="sidebar-link">
                         {/*<FiFileText size={18} />*/}
                         <FiHome size={18} />
                         <span>Painel</span>
                     </NavLink>
 
-                    <NavLink to="/clientes" style={linkStyle}>
+                    <NavLink to="/clientes" style={linkStyle} className="sidebar-link">
                         <FiUsers size={18} />
                         <span>Clientes</span>
                     </NavLink>
 
-                    <NavLink to="/veiculos" style={linkStyle}>
+                    <NavLink to="/veiculos" style={linkStyle} className="sidebar-link">
                         <FiTruck size={18} />
                         <span>Veículos</span>
                     </NavLink>
 
-                    <NavLink to="/ordens-servico" style={linkStyle}>
+                    <NavLink to="/ordens-servico" style={linkStyle} className="sidebar-link">
                         <FiFileText size={18} />
                         <span>Ordens</span>
                     </NavLink>
 
                     {permissions.USUARIOS.includes(perfil) && (
                         <>
-                        <NavLink to="/usuarios" style={linkStyle}>
+                            <NavLink to="/usuarios" style={linkStyle} className="sidebar-link">
                             <FiUsers size={18} />
                             <span>Usuários</span>
                         </NavLink>
 
            
-                        <NavLink to="/configuracao-oficina" style={linkStyle}>
+                            <NavLink to="/configuracao-oficina" style={linkStyle} className="sidebar-link">
                             <FiSettings size={18} />
                             <span>Configurações</span>
                             </NavLink>
