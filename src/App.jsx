@@ -20,6 +20,7 @@ import { Toaster } from "react-hot-toast";
 import OrdensServicoPorVeiculo from "./pages/ordens/OrdensServicoPorVeiculo";
 import TrocarSenha from "./pages/TrocarSenha";
 import AlterarSenha from "./pages/AlterarSenha";
+import ConfiguracaoOficina from "./pages/ConfiguracaoOficina";
 
 function App() {
 
@@ -97,6 +98,7 @@ function App() {
 
                     <Route path="/trocar-senha" element={<TrocarSenha />} />
                     <Route path="/alterar-senha" element={<AlterarSenha />} />
+                    <Route path="/configuracao-oficina" element={<ConfiguracaoOficina />} />
 
                 </Route>
 

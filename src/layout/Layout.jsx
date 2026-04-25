@@ -1,8 +1,8 @@
 ﻿import { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { FiUsers, FiTruck, FiFileText, FiLogOut } from "react-icons/fi";
-import { FiHome } from "react-icons/fi";
+import { FiHome, FiUsers, FiTruck, FiFileText, FiLogOut, FiSettings } from "react-icons/fi";
+
 import BuscaPlaca from "../components/BuscaPlaca";
 import permissions from "../config/permissions";
 
@@ -14,17 +14,43 @@ function Layout() {
         <div style={{ display: "flex", height: "100vh", fontFamily: "Inter, sans-serif" }}>
 
             {/* SIDEBAR */}
+            {/*<aside style={{*/}
+            {/*    width: "220px",*/}
+            {/*    borderRight: "1px solid #e5e7eb",*/}
+            {/*    display: "flex",*/}
+            {/*    flexDirection: "column",*/}
+            {/*    padding: "24px"*/}
+            {/*}}>*/}
             <aside style={{
-                width: "220px",
+                width: "240px",
+                backgroundColor: "#ffffff",
                 borderRight: "1px solid #e5e7eb",
                 display: "flex",
                 flexDirection: "column",
-                padding: "24px"
-            }}>
+                padding: "24px",
+                boxShadow: "2px 0 10px rgba(0,0,0,0.03)"
+            }}
 
-                <h2 style={{ fontSize: "18px", marginBottom: "40px", fontWeight: 600 }}>
-                    Oficina
-                </h2>
+                <div style={{ marginBottom: "40px" }}>
+
+                    <div style={{
+                        fontSize: "24px",
+                        fontWeight: "800",
+                        color: "#1e3c72",
+                        letterSpacing: "1px"
+                    }}>
+                        NORVIK AUTO
+                    </div>
+
+                    <div style={{
+                        fontSize: "12px",
+                        color: "#6b7280",
+                        marginTop: "4px"
+                    }}>
+                        by Norvik Sys
+                    </div>
+
+                </div>
 
                 <nav style={{ flex: 1 }}>
                 
@@ -50,10 +76,18 @@ function Layout() {
                     </NavLink>
 
                     {permissions.USUARIOS.includes(perfil) && (
+                        <>
                         <NavLink to="/usuarios" style={linkStyle}>
                             <FiUsers size={18} />
                             <span>Usuários</span>
                         </NavLink>
+
+           
+                        <NavLink to="/configuracao-oficina" style={linkStyle}>
+                            <FiSettings size={18} />
+                            <span>Configurações</span>
+                            </NavLink>
+                        </>
                     )}
 
                 </nav>
@@ -81,21 +115,31 @@ function Layout() {
             <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
 
                 {/* HEADER */}
+                {/*<header style={{*/}
+                {/*    padding: "20px 40px",*/}
+                {/*    borderBottom: "1px solid #e5e7eb",*/}
+                {/*    display: "flex",*/}
+                {/*    justifyContent: "space-between",*/}
+                {/*    alignItems: "center",*/}
+                {/*    fontSize: "14px",*/}
+                {/*    color: "#6b7280"*/}
+                {/*}}>*/}
                 <header style={{
-                    padding: "20px 40px",
+                    padding: "18px 40px",
                     borderBottom: "1px solid #e5e7eb",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
                     fontSize: "14px",
-                    color: "#6b7280"
-                }}>
+                    color: "#6b7280",
+                    backgroundColor: "#ffffff"
+                }}
                     {/* BUSCA DE PLACA */}
                     <BuscaPlaca />
 
                     {/* USUÁRIO */}
                     <div>
-                        {usuarioNome} ({perfil})
+                    👤 {usuarioNome} • {perfil}
                     </div>
                 </header>
 
@@ -103,7 +147,7 @@ function Layout() {
                 <main style={{
                     padding: "40px",
                     flex: 1,
-                    backgroundColor: "#fafafa"
+                    backgroundColor: "#f8fafc"
                 }}>
                     <Outlet />
                 </main>
@@ -113,15 +157,30 @@ function Layout() {
     );
 }
 
+//const linkStyle = ({ isActive }) => ({
+//    display: "flex",
+//    alignItems: "center",
+//    gap: "10px",
+//    padding: "10px 0",
+//    textDecoration: "none",
+//    fontSize: "14px",
+//    fontWeight: isActive ? 600 : 400,
+//    color: isActive ? "#111827" : "#6b7280",
+//    transition: "0.2s"
+//});
+
 const linkStyle = ({ isActive }) => ({
     display: "flex",
     alignItems: "center",
     gap: "10px",
-    padding: "10px 0",
+    padding: "12px 14px",
+    marginBottom: "6px",
+    borderRadius: "10px",
     textDecoration: "none",
     fontSize: "14px",
-    fontWeight: isActive ? 600 : 400,
-    color: isActive ? "#111827" : "#6b7280",
+    fontWeight: isActive ? 700 : 500,
+    color: isActive ? "#1e3c72" : "#6b7280",
+    backgroundColor: isActive ? "#eef4ff" : "transparent",
     transition: "0.2s"
 });
 
