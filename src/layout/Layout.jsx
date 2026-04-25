@@ -29,24 +29,24 @@ function Layout() {
                 flexDirection: "column",
                 padding: "24px",
                 boxShadow: "2px 0 10px rgba(0,0,0,0.03)"
-            }}
+            }}>
 
                 <div style={{ marginBottom: "40px" }}>
 
                     <div style={{
-                        fontSize: "24px",
-                        fontWeight: "800",
-                        color: "#1e3c72",
-                        letterSpacing: "1px"
-                    }}>
+                            fontSize: "24px",
+                            fontWeight: "800",
+                            color: "#1e3c72",
+                            letterSpacing: "1px"
+                        }}>
                         NORVIK AUTO
                     </div>
 
                     <div style={{
-                        fontSize: "12px",
-                        color: "#6b7280",
-                        marginTop: "4px"
-                    }}>
+                            fontSize: "12px",
+                            color: "#6b7280",
+                            marginTop: "4px"
+                        }}>
                         by Norvik Sys
                     </div>
 
@@ -133,13 +133,13 @@ function Layout() {
                     fontSize: "14px",
                     color: "#6b7280",
                     backgroundColor: "#ffffff"
-                }}
+                }}>
                     {/* BUSCA DE PLACA */}
                     <BuscaPlaca />
 
                     {/* USUÁRIO */}
-                    <div>
-                    👤 {usuarioNome} • {perfil}
+                    <div style={{ fontWeight: 500 }}>
+                        👤 {usuarioNome} • {perfil}
                     </div>
                 </header>
 
