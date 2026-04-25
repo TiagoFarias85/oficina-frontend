@@ -2,7 +2,7 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FiHome, FiUsers, FiTruck, FiFileText, FiLogOut, FiSettings } from "react-icons/fi";
-import "../styles/usuario.css";
+import "../styles/usuarios.css";
 import BuscaPlaca from "../components/BuscaPlaca";
 import permissions from "../config/permissions";
 
