@@ -77,11 +77,6 @@ function Layout() {
                         </NavLink>
                     )}
 
-                    <NavLink to="/financeiro" style={linkStyle} className="sidebar-link">
-                        <FiDollarSign size={18} />
-                        <span>Financeiro</span>
-                    </NavLink>
-
                     {permissions.USUARIOS.includes(perfil) && (
                         <>
                             <NavLink to="/usuarios" style={linkStyle} className="sidebar-link">
