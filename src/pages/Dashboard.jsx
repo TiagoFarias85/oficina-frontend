@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+﻿import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { apiGet } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { toastErro } from "../utils/toast";
@@ -7,6 +8,7 @@ function Dashboard() {
 
     const [dados, setDados] = useState(null);
     const navigate = useNavigate()
+    const { perfil } = useContext(AuthContext);
 
     useEffect(() => {
         async function carregar() {
@@ -99,16 +101,18 @@ function Dashboard() {
                 </div>
             </div>
 
-            <div style={cardStyle}>
-                <strong>Faturamento Mês</strong>
-                <div style={{ ...cardValue, color: "#16a34a" }}>
-                    {/*R$ {dados.faturamentoMes.toFixed(2)}*/}
-                    {Number(dados.faturamentoMes).toLocaleString("pt-BR", {
-                        style: "currency",
-                        currency: "BRL"
-                    })}
+            {perfil === "ADMIN" && (
+                <div style={cardStyle}>
+                    <strong>Faturamento Mês</strong>
+                    <div style={{ ...cardValue, color: "#16a34a" }}>
+                        {/*R$ {dados.faturamentoMes.toFixed(2)}*/}
+                        {Number(dados.faturamentoMes).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL"
+                        })}
+                    </div>
                 </div>
-            </div>
+            )}
 
             <button onClick={() => navigate("/alterar-senha")}>
                 Alterar senha

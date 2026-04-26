@@ -26,6 +26,7 @@ import Financeiro from "./pages/Financeiro";
 function App() {
 
     const { isAuthenticated } = useContext(AuthContext);
+    const { perfil } = useContext(AuthContext);
 
     return (
         <BrowserRouter>
@@ -100,7 +101,15 @@ function App() {
                     <Route path="/trocar-senha" element={<TrocarSenha />} />
                     <Route path="/alterar-senha" element={<AlterarSenha />} />
                     <Route path="/configuracao-oficina" element={<ConfiguracaoOficina />} />
-                    <Route path="/financeiro" element={<Financeiro />} />
+                    {/*<Route path="/financeiro" element={<Financeiro />} />*/}
+                    <Route
+                        path="/financeiro"
+                        element={
+                            <ProtectedRoute roles={["ADMIN"]}>
+                                <Financeiro />
+                            </ProtectedRoute>
+                        }
+                    />
 
                 </Route>
 
