@@ -78,14 +78,6 @@ function EditarUsuario() {
             </div>
 
             <div className="form-group">
-                <label>Login</label>
-                <input
-                    value={login}
-                    onChange={e => setLogin(e.target.value)}
-                />
-            </div>
-
-            <div className="form-group">
                 <label>Nome</label>
                 <input
                     value={nome}
