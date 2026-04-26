@@ -800,7 +800,8 @@ function OrdemServicoDetalhe() {
                     />
 
                     <input
-                        type="number"
+                            type="text"
+                            inputMode="decimal"
                         placeholder="Valor"
                         value={valorServico}
                         onChange={e => setValorServico(e.target.value)}
@@ -914,7 +915,8 @@ function OrdemServicoDetalhe() {
                     />
 
                     <input
-                        type="number"
+                            type="text"
+                            inputMode="decimal"
                         placeholder="Valor Unit."
                         value={valorPeca}
                         onChange={e => setValorPeca(formatarMoeda(e.target.value))}
