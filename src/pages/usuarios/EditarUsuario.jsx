@@ -11,6 +11,7 @@ function EditarUsuario() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [perfil, setPerfil] = useState("ATENDENTE");
+    const [login, setLogin] = useState("");
 
     useEffect(() => {
 
@@ -44,6 +45,7 @@ function EditarUsuario() {
         try {
 
             await apiPut(`/usuarios/${id}`, {
+                login,
                 nome,
                 email,
                 perfil
