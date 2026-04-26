@@ -110,7 +110,7 @@ function OrdemServicoDetalhe() {
         }
 
         //if (os.status === "Finalizado") {
-        if (osEncerrada)
+        if (osEncerrada) {
             showToast("Esta OS está finalizada e não pode ser alterada", "error")
             return
         }
