@@ -73,6 +73,14 @@ function VeiculoForm() {
             return;
         }
 
+        const anoNumero = parseInt(ano);
+        const anoAtual = new Date().getFullYear() + 1;
+
+        if (anoNumero < 1900 || anoNumero > anoAtual) {
+            toastErro("Informe um ano válido");
+            return;
+        }
+
         try {
 
             const payload = {
@@ -81,7 +89,7 @@ function VeiculoForm() {
                 marca,
                 modelo,
                 ano: parseInt(ano),
-                quilometragem: quilometragem ? parseInt(quilometragem) : 0
+                quilometragem: quilometragem ? parseInt(quilometragem.replace(/\D/g, "")) : 0
             }
 
             if (id) {
@@ -119,6 +127,28 @@ function VeiculoForm() {
         valor = valor.substring(0, 7);
 
         return valor;
+    }
+
+    function formatarAno(valor) {
+
+        valor = (valor || "").toString();
+
+        valor = valor.replace(/\D/g, "");
+
+        valor = valor.substring(0, 4);
+
+        return valor;
+    }
+
+    function formatarKm(valor) {
+
+        valor = (valor || "").toString();
+
+        valor = valor.replace(/\D/g, "");
+
+        valor = valor.substring(0, 7);
+
+        return valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 
     return (
@@ -189,9 +219,11 @@ function VeiculoForm() {
                 <div style={{ marginBottom: 15 }}>
                     <label>Ano</label>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         value={ano}
-                        onChange={e => setAno(e.target.value)}
+                        onChange={e => setAno(formatarAno(e.target.value))}
+                        placeholder="2024"
                         style={inputStyle}
                     />
                 </div>
@@ -199,9 +231,11 @@ function VeiculoForm() {
                 <div style={{ marginBottom: 20 }}>
                     <label>Quilometragem</label>
                     <input
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         value={quilometragem}
-                        onChange={e => setQuilometragem(e.target.value)}
+                        onChange={e => setQuilometragem(formatarKm(e.target.value))}
+                        placeholder="125.000"
                         style={inputStyle}
                     />
                 </div>
