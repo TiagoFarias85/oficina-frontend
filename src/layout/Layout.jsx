@@ -70,10 +70,15 @@ function Layout() {
                         <span>Veículos</span>
                     </NavLink>
 
+                    <NavLink to="/ordens-servico" style={linkStyle} className="sidebar-link">
+                        <FiFileText size={18} />
+                        <span>Ordens</span>
+                    </NavLink>
+
                     {perfil === "ADMIN" && (
                         <NavLink to="/financeiro" style={linkStyle} className="sidebar-link">
                             <FiDollarSign size={18} />
-                            <span>Financeiroooo</span>
+                            <span>Financeiro</span>
                         </NavLink>
                     )}
 
