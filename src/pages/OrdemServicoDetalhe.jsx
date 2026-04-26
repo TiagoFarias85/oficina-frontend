@@ -89,6 +89,12 @@ function OrdemServicoDetalhe() {
     //    }
     //}
 
+    function moedaParaNumero(valor) {
+        return parseFloat(
+            valor.replace(/\./g, "").replace(",", ".")
+        ) || 0;
+    }
+
     async function adicionarServico() {
 
         if (!descricaoServico.trim()) {
@@ -111,7 +117,8 @@ function OrdemServicoDetalhe() {
             await apiPost('/ordens-servico/adicionar-servico', {
                 ordemServicoId: os.id,
                 descricao: descricaoServico,
-                valor: parseFloat(valorServico)
+                //valor: parseFloat(valorServico)
+                valor: moedaParaNumero(valorServico)
             })
 
             const atualizado = await apiGet(`/ordens-servico/${id}`)
@@ -197,7 +204,8 @@ function OrdemServicoDetalhe() {
                 ordemServicoId: os.id,
                 descricao: descricaoPeca,
                 quantidade: parseInt(quantidadePeca),
-                valorVendaUnitario: parseFloat(valorPeca)
+                //valorVendaUnitario: parseFloat(valorPeca)
+                valorVendaUnitario: moedaParaNumero(valorPeca)
             })
 
             const atualizado = await apiGet(`/ordens-servico/${id}`)
@@ -305,6 +313,19 @@ function OrdemServicoDetalhe() {
         }, 3000);
 
         return () => clearTimeout(timer);
+    }
+
+    function formatarMoeda(valor) {
+        valor = (valor || "").toString();
+
+        valor = valor.replace(/\D/g, "");
+
+        valor = (parseInt(valor || "0", 10) / 100).toFixed(2);
+
+        return Number(valor).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
     }
 
     return (
@@ -896,7 +917,7 @@ function OrdemServicoDetalhe() {
                         type="number"
                         placeholder="Valor Unit."
                         value={valorPeca}
-                        onChange={e => setValorPeca(e.target.value)}
+                        onChange={e => setValorPeca(formatarMoeda(e.target.value))}
                         style={{ flex: 1, padding: "8px" }}
                     />
 
