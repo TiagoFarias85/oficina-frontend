@@ -16,7 +16,7 @@ function NovoUsuario() {
     async function salvar() {
 
         try {
-            if (!login || !nome || !email || !perfil) {
+            if (!login || !nome || !senha || !perfil) {
                 toastErro("Preencha todos os campos.");
                 return;
             }
@@ -65,7 +65,7 @@ function NovoUsuario() {
             </div>
 
             <div className="form-group">
-                <label>Email</label>
+                <label>E-mail (opcional)</label>
                 <input
                     type="email"
                     value={email}

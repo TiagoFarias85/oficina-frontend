@@ -86,7 +86,7 @@ function EditarUsuario() {
             </div>
 
             <div className="form-group">
-                <label>E-mail</label>
+                <label>E-mail (opcional)</label>
                 <input
                     value={email}
                     onChange={e => setEmail(e.target.value)}
