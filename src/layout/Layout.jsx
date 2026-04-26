@@ -77,7 +77,7 @@ function Layout() {
 
                     <NavLink to="/financeiro" style={linkStyle} className="sidebar-link">
                         <FiDollarSign size={18} />
-                        💰 Financeiro
+                        <span>Financeiro</span>
                     </NavLink>
 
                     {permissions.USUARIOS.includes(perfil) && (
