@@ -68,6 +68,11 @@ function VeiculoForm() {
             return
         }
 
+        if (placa.length !== 7) {
+            toastErro("Informe uma placa válida");
+            return;
+        }
+
         try {
 
             const payload = {
@@ -101,6 +106,19 @@ function VeiculoForm() {
         marginTop: 5,
         borderRadius: 6,
         border: "1px solid #ccc"
+    }
+
+    function formatarPlaca(valor) {
+
+        valor = (valor || "").toString();
+
+        valor = valor.toUpperCase();
+
+        valor = valor.replace(/[^A-Z0-9]/g, "");
+
+        valor = valor.substring(0, 7);
+
+        return valor;
     }
 
     return (
@@ -144,7 +162,8 @@ function VeiculoForm() {
                     <label>Placa</label>
                     <input
                         value={placa}
-                        onChange={e => setPlaca(e.target.value.toUpperCase())}
+                        onChange={e => setPlaca(formatarPlaca(e.target.value))}
+                        placeholder="ABC1234"
                         style={inputStyle}
                     />
                 </div>
