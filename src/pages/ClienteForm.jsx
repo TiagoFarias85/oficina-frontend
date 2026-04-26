@@ -51,7 +51,7 @@ function ClienteForm() {
                     style={inputStyle}
                 />
                 {erros[name] && (
-                    <span style={{ color: "red", fontSize: 13 }}>
+                    <span style={{ color: "#dc2626", fontSize: 13 }}>
                         {erros[name]}
                     </span>
                 )}
@@ -115,14 +115,105 @@ function ClienteForm() {
         }
     }
 
+    function formatarCpfCnpj(valor) {
+        valor = valor.replace(/\D/g, "");
+
+        if (valor.length <= 11) {
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+            valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        } else {
+            valor = valor.replace(/^(\d{2})(\d)/, "$1.$2");
+            valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+            valor = valor.replace(/\.(\d{3})(\d)/, ".$1/$2");
+            valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+        }
+
+        return valor;
+    }
+
+    function formatarTelefone(valor) {
+        valor = valor.replace(/\D/g, "");
+
+        if (valor.length <= 10) {
+            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+            valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+        } else {
+            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+            valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+        }
+
+        return valor;
+    }
+
+    function validarCampo(name, value) {
+
+        let mensagem = "";
+
+        if (name === "nome" && !value.trim()) {
+            mensagem = "Informe o nome.";
+        }
+
+        if (name === "telefone") {
+            const numeros = value.replace(/\D/g, "");
+            if (numeros.length > 0 && numeros.length < 10) {
+                mensagem = "Telefone incompleto.";
+            }
+        }
+
+        if (name === "cpfCnpj") {
+            const numeros = value.replace(/\D/g, "");
+
+            if (numeros.length > 0 && numeros.length !== 11 && numeros.length !== 14) {
+                mensagem = "CPF/CNPJ incompleto.";
+            }
+        }
+
+        if (name === "email") {
+            if (value && !value.includes("@")) {
+                mensagem = "Email inválido.";
+            }
+        }
+
+        setErros(prev => ({
+            ...prev,
+            [name]: mensagem
+        }));
+    }
+
+    //function handleChange(e) {
+    //    const { name, value } = e.target;
+
+    //    setCliente(prev => ({
+    //        ...prev,
+    //        [name]: value
+    //    }));
+    //}
+
     function handleChange(e) {
         const { name, value } = e.target;
 
+        let novoValor = value;
+
+        if (name === "cpfCnpj") {
+            novoValor = formatarCpfCnpj(value);
+        }
+
+        if (name === "telefone") {
+            novoValor = formatarTelefone(value);
+        }
+
         setCliente(prev => ({
             ...prev,
-            [name]: value
+            [name]: novoValor
         }));
+
+        validarCampo(name, novoValor);
     }
+
+    const formInvalido =
+        Object.values(erros).some(x => x) ||
+        !cliente.nome?.trim();
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -156,10 +247,18 @@ function ClienteForm() {
                     </div>
 
                     <button
-                        disabled={salvando}
-                        style={primaryButton}
+                        disabled={salvando || formInvalido}
+                        style={{
+                            ...primaryButton,
+                            opacity: salvando || formInvalido ? 0.6 : 1,
+                            cursor: salvando || formInvalido ? "not-allowed" : "pointer"
+                        }}
                     >
-                        {salvando ? "Salvando..." : "Salvar Cliente"}
+                        {salvando
+                            ? "Salvando..."
+                            : formInvalido
+                                ? "Preencha corretamente"
+                                : "Salvar Cliente"}
                     </button>
 
                 </form>

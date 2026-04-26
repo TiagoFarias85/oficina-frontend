@@ -1,4 +1,4 @@
-﻿import { useState, useContext } from "react";
+﻿import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { apiPost } from "../services/api";
@@ -17,8 +17,11 @@ function Login() {
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState(null);
     const [loading, setLoading] = useState(false);
+    const inputLoginRef = useRef(null);
 
     async function handleLogin(e) {
+
+        if (e) e.preventDefault();
 
         if (loading) return;
 
@@ -75,6 +78,10 @@ function Login() {
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        inputLoginRef.current?.focus();
+    }, []);
 
     return (
         
@@ -144,7 +151,7 @@ function Login() {
                 </div>
 
                 {/*<form onSubmit={handleLogin}>*/}
-                <div>
+                <form onSubmit={handleLogin}>
 
                 {/*<form onSubmit={(e) => {*/}
                 {/*    e.preventDefault();*/}
@@ -156,6 +163,7 @@ function Login() {
                         <input
                             //type="email"
                             placeholder="Login ou Email"
+                            ref={inputLoginRef}
                             value={loginInput}
                             onChange={e => setLoginInput(e.target.value)}
                             required
@@ -191,8 +199,8 @@ function Login() {
                     </div>
                     
                     <button
-                        //type="submit"
-                        type="button"
+                        type="submit"
+                        //type="button"
                         onClick={handleLogin}
                         disabled={loading}
                         style={{
@@ -214,7 +222,7 @@ function Login() {
                     </button>
 
               {/*  </form>*/}
-            </div>
+                </form>
 
                 {erro && (
                     <div
