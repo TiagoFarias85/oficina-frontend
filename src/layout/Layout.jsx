@@ -75,7 +75,8 @@ function Layout() {
                         <span>Ordens</span>
                     </NavLink>
 
-                    <NavLink to="/financeiro">
+                    <NavLink to="/financeiro" style={linkStyle} className="sidebar-link">
+                        <FiFileText size={18} />
                         💰 Financeiro
                     </NavLink>
 
