@@ -172,7 +172,11 @@ function OrdensServicoList() {
                             {/* Total */}
                             <div>
                                 <strong>
-                                    R$ {Number(os.valorTotal).toFixed(2)}
+                                    {/*R$ {Number(os.valorTotal).toFixed(2)}*/}
+                                    {Number(os.valorTotal).toLocaleString("pt-BR", {
+                                        style: "currency",
+                                        currency: "BRL"
+                                    })}
                                 </strong>
                             </div>
 

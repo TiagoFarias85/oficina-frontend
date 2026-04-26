@@ -731,7 +731,7 @@ async function registrarPagamento() {
                 >
                     <div>
                         <div>Total Pago</div>
-                        <strong>R$ {Number(os.totalPago).toLocaleString("pt-BR", {
+                        <strong>{Number(os.totalPago).toLocaleString("pt-BR", {
                             style: "currency",
                             currency: "BRL"
                         })}</strong>
@@ -742,7 +742,7 @@ async function registrarPagamento() {
                         <strong style={{
                             color: os.valorRestante > 0 ? "#dc2626" : "#16a34a"
                         }}>
-                            R$ {Number(os.valorRestante).toLocaleString("pt-BR", {
+                            {Number(os.valorRestante).toLocaleString("pt-BR", {
                                 style: "currency",
                                 currency: "BRL"
                             })}
@@ -949,7 +949,7 @@ async function registrarPagamento() {
 
                                         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                                             <span>
-                                                R$ {Number(s.valor).toLocaleString("pt-BR", {
+                                                {Number(s.valor).toLocaleString("pt-BR", {
                                                     style: "currency",
                                                     currency: "BRL"
                                                 })}
@@ -1079,7 +1079,7 @@ async function registrarPagamento() {
 
                             <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                                 <span>
-                                    R$ {(p.quantidade * p.valorVendaUnitario).toLocaleString("pt-BR", {
+                                    {(p.quantidade * p.valorVendaUnitario).toLocaleString("pt-BR", {
                                         style: "currency",
                                         currency: "BRL"
                                     })}
@@ -1117,7 +1117,7 @@ async function registrarPagamento() {
                     fontWeight: "bold"
                 }}
             >
-                    Subtotal Peças: R$ {Number(os.totalPecas).toLocaleString("pt-BR", {
+                    Subtotal Peças: {Number(os.totalPecas).toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL"
                     })}

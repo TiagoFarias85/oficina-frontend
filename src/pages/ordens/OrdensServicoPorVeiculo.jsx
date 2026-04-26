@@ -141,7 +141,11 @@ function OrdensServicoPorVeiculo() {
                     <div style={cardStyle}>
                         <strong>Faturamento</strong>
                         <div style={{ ...cardValue, color: "#059669" }}>
-                            R$ {faturamento.toFixed(2)}
+                          {/*  R$ {faturamento.toFixed(2)}*/}
+                            {Number(faturamento).toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL"
+                            })}
                         </div>
                     </div>
 
