@@ -162,7 +162,7 @@ function OrdemServicoDetalhe() {
     async function removerServico(servicoId) {
 
         try {
-
+            console.log(servicoId);
             await apiDelete(`/ordens-servico/${os.id}/servicos/${servicoId}`)
 
             const atualizado = await apiGet(`/ordens-servico/${id}`)
@@ -683,7 +683,8 @@ function OrdemServicoDetalhe() {
                             ) : (
                                 os.servicos.map((s, index) => (
                                     <div
-                                        key={index}
+                                        //key={index}
+                                        key={s.servicoId}
                                         style={{
                                             display: "flex",
                                             justifyContent: "space-between",
@@ -703,7 +704,8 @@ function OrdemServicoDetalhe() {
 
                                             {!os.laudoGerado && os.status !== "Finalizado" && (
                                                 <button
-                                                    onClick={() => removerServico(s.id)}
+                                                    //onClick={() => removerServico(s.id)}
+                                                    onClick={() => removerServico(s.servicoId)}
                                                     style={{
                                                         backgroundColor: "#dc3545",
                                                         color: "white",
@@ -925,7 +927,8 @@ function OrdemServicoDetalhe() {
                 ) : (
                     <ul>
                         {os.historico.map((h, index) => (
-                            <li key={index}>
+                            //<li key={index}>
+                            <li key={h.servicoId}>
                                 {h.evento} — {new Date(h.dataEvento).toLocaleString()}
                             </li>
                         ))}
