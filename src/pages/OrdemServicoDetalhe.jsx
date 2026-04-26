@@ -370,6 +370,24 @@ async function registrarPagamento() {
         });
     }
 
+    async function entregarVeiculo() {
+
+        if (os.valorRestante > 0) {
+
+            const confirmou = await confirmar(
+                `Cliente possui saldo pendente de ${Number(os.valorRestante).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                })}. Deseja entregar mesmo assim?`
+            );
+
+            if (!confirmou)
+                return;
+        }
+
+        alterarStatus("Entregue");
+    }
+
     return (
         <div style={{ maxWidth: 850, margin: "0 auto", padding: 20 }}>
 
@@ -613,11 +631,26 @@ async function registrarPagamento() {
                             </>
                         )}
 
-                        {os.status === "Finalizado" && (
-                            <button onClick={() => alterarStatus("Entregue")}>
-                                Entregar Veículo
-                            </button>
-                        )}
+                        {/*{os.status === "Finalizado" && (*/}
+                        {/*    <button onClick={() => alterarStatus("Entregue")}>*/}
+                        {/*        Entregar Veículo*/}
+                        {/*    </button>*/}
+                        {/*)}*/}
+
+                        <button
+                            onClick={entregarVeiculo}
+                            style={{
+                                backgroundColor: "#16a34a",
+                                color: "white",
+                                border: "none",
+                                padding: "10px 18px",
+                                borderRadius: "6px",
+                                cursor: "pointer",
+                                fontWeight: "bold"
+                            }}
+                        >
+                            🚗 Entregar Veículo
+                        </button>
 
                         {os.status === "Entregue" && (
                             <span>✅ Veículo entregue</span>
@@ -768,6 +801,48 @@ async function registrarPagamento() {
                         </button>
 
                     </div>
+                </div>
+
+                <div
+                    style={{
+                        padding: "15px",
+                        border: "1px solid #ddd",
+                        borderRadius: "8px",
+                        marginBottom: "20px",
+                        backgroundColor: "#ffffff"
+                    }}
+                >
+                    <h3 style={{ marginTop: 0 }}>📋 Pagamentos Registrados</h3>
+
+                    {os.pagamentos?.length === 0 ? (
+                        <p>Nenhum pagamento registrado.</p>
+                    ) : (
+                        os.pagamentos.map((p, index) => (
+                            <div
+                                key={index}
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    padding: "10px 0",
+                                    borderBottom: "1px solid #eee"
+                                }}
+                            >
+                                <div>
+                                    <strong>{p.formaPagamento}</strong>
+                                    <div style={{ fontSize: "13px", color: "#666" }}>
+                                        {new Date(p.dataPagamento).toLocaleString("pt-BR")}
+                                    </div>
+                                </div>
+
+                                <div style={{ fontWeight: "bold", color: "#16a34a" }}>
+                                    {Number(p.valor).toLocaleString("pt-BR", {
+                                        style: "currency",
+                                        currency: "BRL"
+                                    })}
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
 
             <hr />
