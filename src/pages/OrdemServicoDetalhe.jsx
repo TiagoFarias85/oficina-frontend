@@ -316,11 +316,16 @@ function OrdemServicoDetalhe() {
     }
 
     function formatarMoeda(valor) {
+
         valor = (valor || "").toString();
 
+        // remove tudo que não for número
         valor = valor.replace(/\D/g, "");
 
-        valor = (parseInt(valor || "0", 10) / 100).toFixed(2);
+        if (valor === "")
+            return "";
+
+        valor = (parseInt(valor, 10) / 100).toFixed(2);
 
         return Number(valor).toLocaleString("pt-BR", {
             minimumFractionDigits: 2,
@@ -801,10 +806,10 @@ function OrdemServicoDetalhe() {
 
                     <input
                             type="text"
-                            inputMode="decimal"
+                            inputMode="numeric"
                         placeholder="Valor"
                         value={valorServico}
-                        onChange={e => setValorServico(e.target.value)}
+                            onChange={e => setValorServico(formatarMoeda(e.target.value))}
                         style={{ flex: 1, padding: "8px" }}
                     />
 
@@ -916,7 +921,7 @@ function OrdemServicoDetalhe() {
 
                     <input
                             type="text"
-                            inputMode="decimal"
+                            inputMode="numeric"
                         placeholder="Valor Unit."
                         value={valorPeca}
                         onChange={e => setValorPeca(formatarMoeda(e.target.value))}
