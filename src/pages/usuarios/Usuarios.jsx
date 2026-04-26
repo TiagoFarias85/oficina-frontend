@@ -132,9 +132,11 @@ function Usuarios() {
                         {u.ativo ? "Desativar" : "Ativar"}
                     </button>
 
-                    <button onClick={() => resetSenha(u.id)}>
-                        Reset Senha
-                    </button>
+                    {u.ativo && (
+                        <button onClick={() => resetSenha(u.id)}>
+                            Reset Senha
+                        </button>
+                    )}
                 </div>
             )
         }
