@@ -107,7 +107,7 @@ function Usuarios() {
 
     const columns = [
         { header: "Nome", field: "nome" },
-        { header: "Email", field: "email" },
+        { header: "Login / Email", field: "email" },
         { header: "Perfil", field: "perfil" },
 
         {

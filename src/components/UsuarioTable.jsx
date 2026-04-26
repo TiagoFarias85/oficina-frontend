@@ -7,7 +7,7 @@
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Login / Email</th>
+                    <th>Email</th>
                     <th>Perfil</th>
                     <th>Status</th>
                     <th>Ações</th>
