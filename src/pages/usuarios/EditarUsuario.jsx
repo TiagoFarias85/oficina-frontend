@@ -24,6 +24,7 @@ function EditarUsuario() {
                 //setNome(response.data.nome);
                 //setEmail(response.data.email);
                 //setPerfil(response.data.perfil);
+                setLogin(response.login);
                 setNome(response.nome);
                 setEmail(response.email);
                 setPerfil(response.perfil);
@@ -69,6 +70,22 @@ function EditarUsuario() {
             <h2 className="form-title">Editar Usuário</h2>
 
             <div className="form-group">
+                <label>Login</label>
+                <input
+                    value={login}
+                    onChange={e => setLogin(e.target.value)}
+                />
+            </div>
+
+            <div className="form-group">
+                <label>Login</label>
+                <input
+                    value={login}
+                    onChange={e => setLogin(e.target.value)}
+                />
+            </div>
+
+            <div className="form-group">
                 <label>Nome</label>
                 <input
                     value={nome}
@@ -77,7 +94,7 @@ function EditarUsuario() {
             </div>
 
             <div className="form-group">
-                <label>Usuário (Login ou E-mail)</label>
+                <label>E-mail</label>
                 <input
                     value={email}
                     onChange={e => setEmail(e.target.value)}
