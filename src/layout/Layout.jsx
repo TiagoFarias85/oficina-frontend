@@ -73,7 +73,7 @@ function Layout() {
                     {perfil === "ADMIN" && (
                         <NavLink to="/financeiro" style={linkStyle} className="sidebar-link">
                             <FiDollarSign size={18} />
-                            <span>Financeiro</span>
+                            <span>Financeiroooo</span>
                         </NavLink>
                     )}
 
