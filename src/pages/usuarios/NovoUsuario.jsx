@@ -11,12 +11,18 @@ function NovoUsuario() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [perfil, setPerfil] = useState("ATENDENTE");
+    const [login, setLogin] = useState("");
 
     async function salvar() {
 
         try {
+            if (!login || !nome || !email || !perfil) {
+                toastErro("Preencha todos os campos.");
+                return;
+            }
 
             await apiPost("/usuarios", {
+                login,
                 nome,
                 email,
                 senha,
@@ -28,8 +34,8 @@ function NovoUsuario() {
             navigate("/usuarios");
 
         } catch (error) {
-
-            toastErro(error.message);
+            toastErro("Erro ao cadastrar usuário.");
+            //toastErro(error.message);
 
         }
 
@@ -39,6 +45,15 @@ function NovoUsuario() {
         <div className="form-container">
 
             <h2 className="form-title">Novo Usuário</h2>
+
+            <div className="form-group">
+                <label>Login</label>
+                <input
+                    type="text"
+                    value={login}
+                    onChange={e => setLogin(e.target.value)}
+                />
+            </div>
 
             <div className="form-group">
                 <label>Nome</label>
@@ -82,14 +97,14 @@ function NovoUsuario() {
             <div className="form-actions">
 
                 <button
-                    className="btn-primary"
+                    className="btn-secondary"
                     onClick={() => navigate("/usuarios")}
                 >
                     Cancelar
                 </button>
 
                 <button
-                    className="btn-secondary"
+                    className="btn-primary"
                     onClick={salvar}
                 >
                     Salvar
