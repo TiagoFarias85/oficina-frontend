@@ -1,7 +1,7 @@
 ﻿import { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { FiHome, FiUsers, FiTruck, FiFileText, FiLogOut, FiSettings } from "react-icons/fi";
+import { FiHome, FiUsers, FiTruck, FiFileText, FiLogOut, FiSettings, FiDollarSign } from "react-icons/fi";
 import "../styles/usuarios.css";
 import BuscaPlaca from "../components/BuscaPlaca";
 import permissions from "../config/permissions";
@@ -76,7 +76,7 @@ function Layout() {
                     </NavLink>
 
                     <NavLink to="/financeiro" style={linkStyle} className="sidebar-link">
-                        <FiFileText size={18} />
+                        <FiDollarSign size={18} />
                         💰 Financeiro
                     </NavLink>
 
