@@ -12,7 +12,8 @@ function Dashboard() {
         async function carregar() {
             try {
                 //const data = await apiGet("/dashboard");
-                const data = await apiGet("/ordens-servico/dashboard");
+                //const data = await apiGet("/ordens-servico/dashboard");
+                const data = await apiGet("/dashboard");
                 setDados(data);
             } catch {
                 toastErro("Erro ao carregar dashboard");
