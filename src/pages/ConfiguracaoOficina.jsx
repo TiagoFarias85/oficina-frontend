@@ -8,15 +8,15 @@ function ConfiguracaoOficina() {
     const [mensagem, setMensagem] = useState("");
 
     useEffect(() => {
-        carregar();
+        async function carregarDados() {
+            const data = await apiGet("/oficina");
+
+            setNome(data.nome || "");
+            setCnpj(data.cnpj || "");
+        }
+
+        carregarDados();
     }, []);
-
-    async function carregar() {
-        const data = await apiGet("/oficina");
-
-        setNome(data.nome || "");
-        setCnpj(data.cnpj || "");
-    }
 
     async function salvar() {
         await apiPut("/oficina", {
@@ -27,25 +27,57 @@ function ConfiguracaoOficina() {
         setMensagem("Dados salvos com sucesso.");
     }
 
+    const inputStyle = {
+        width: "100%",
+        padding: "12px",
+        borderRadius: "10px",
+        border: "1px solid #d1d5db",
+        fontSize: "14px",
+        outline: "none",
+        boxSizing: "border-box"
+    };
+
     return (
         <div style={{ padding: "30px" }}>
 
             <h2>⚙️ Configurações da Oficina</h2>
 
             <div style={{ marginTop: "20px" }}>
+
+                <label style={{
+                    display: "block",
+                    marginBottom: "6px",
+                    fontWeight: "600",
+                    color: "#374151"
+                }}>
+                    Nome da Oficina
+                </label>
+
                 <input
-                    placeholder="Nome da Oficina"
                     value={nome}
                     onChange={e => setNome(e.target.value)}
+                    style={inputStyle}
                 />
+
             </div>
 
-            <div style={{ marginTop: "10px" }}>
+            <div style={{ marginTop: "15px" }}>
+
+                <label style={{
+                    display: "block",
+                    marginBottom: "6px",
+                    fontWeight: "600",
+                    color: "#374151"
+                }}>
+                    CNPJ
+                </label>
+
                 <input
-                    placeholder="CNPJ"
                     value={cnpj}
                     onChange={e => setCnpj(e.target.value)}
+                    style={inputStyle}
                 />
+
             </div>
 
             <button
