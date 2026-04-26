@@ -162,7 +162,6 @@ function OrdemServicoDetalhe() {
     async function removerServico(servicoId) {
 
         try {
-            console.log(servicoId);
             await apiDelete(`/ordens-servico/${os.id}/servicos/${servicoId}`)
 
             const atualizado = await apiGet(`/ordens-servico/${id}`)
