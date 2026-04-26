@@ -70,7 +70,7 @@ function Usuarios() {
 
     async function resetSenha(id) {
 
-        const confirmou = await confirmar("Resetar senha do usuário para 123456?");
+        const confirmou = await confirmar("Resetar senha do usuário?");
 
         if (!confirmou)
             return;
@@ -78,7 +78,7 @@ function Usuarios() {
         const response = await apiPatch(`/usuarios/${id}/reset-senha`);
 
         //alert("Nova senha: " + response.data.senha);
-        toastSucesso("Nova senha: " + response.senha);
+        toastSucesso("Nova senha temporária: " + response.senha);
     }
 
     // 5️º useEffect
