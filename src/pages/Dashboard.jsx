@@ -102,7 +102,11 @@ function Dashboard() {
             <div style={cardStyle}>
                 <strong>Faturamento Mês</strong>
                 <div style={{ ...cardValue, color: "#16a34a" }}>
-                    R$ {dados.faturamentoMes.toFixed(2)}
+                    {/*R$ {dados.faturamentoMes.toFixed(2)}*/}
+                    R$ {Number(dados.faturamentoMes).toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL"
+                    })}
                 </div>
             </div>
 
