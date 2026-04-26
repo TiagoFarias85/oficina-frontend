@@ -116,7 +116,12 @@ function ClienteForm() {
     }
 
     function formatarCpfCnpj(valor) {
+
+        valor = (valor || "").toString();
+
         valor = valor.replace(/\D/g, "");
+
+        valor = valor.substring(0, 14);
 
         if (valor.length <= 11) {
             valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
@@ -132,14 +137,32 @@ function ClienteForm() {
         return valor;
     }
 
+    //function formatarTelefone(valor) {
+    //    valor = valor.replace(/\D/g, "");
+
+    //    if (valor.length <= 10) {
+    //        valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+    //        valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+    //    } else {
+    //        valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+    //        valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
+    //    }
+
+    //    return valor;
+    //}
+
     function formatarTelefone(valor) {
+
+        valor = (valor || "").toString();
+
         valor = valor.replace(/\D/g, "");
+        valor = valor.substring(0, 11);
 
         if (valor.length <= 10) {
-            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+            valor = valor.replace(/^(\d{2})(\d)/, "($1) $2");
             valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
         } else {
-            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2");
+            valor = valor.replace(/^(\d{2})(\d)/, "($1) $2");
             valor = valor.replace(/(\d{5})(\d)/, "$1-$2");
         }
 
