@@ -255,8 +255,9 @@ function OrdemServicoDetalhe() {
                 novoStatus: novoStatus
             })
 
-            const atualizado = await apiGet(`/ordens-servico/${id}`)
-            setOs(atualizado)
+            const atualizado = await apiGet(`/ordens-servico/${id}`);
+            setOs(atualizado);
+
             toastSucesso("Status alterado com sucesso!")
 
         } catch (error) {
@@ -637,20 +638,22 @@ async function registrarPagamento() {
                         {/*    </button>*/}
                         {/*)}*/}
 
-                        <button
-                            onClick={entregarVeiculo}
-                            style={{
-                                backgroundColor: "#16a34a",
-                                color: "white",
-                                border: "none",
-                                padding: "10px 18px",
-                                borderRadius: "6px",
-                                cursor: "pointer",
-                                fontWeight: "bold"
-                            }}
-                        >
-                            🚗 Entregar Veículo
-                        </button>
+                        {os.status === "Finalizado" && (
+                            <button
+                                onClick={entregarVeiculo}
+                                style={{
+                                    backgroundColor: "#16a34a",
+                                    color: "white",
+                                    border: "none",
+                                    padding: "10px 18px",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    fontWeight: "bold"
+                                }}
+                            >
+                                🚗 Entregar Veículo
+                            </button>
+                        )}
 
                         {os.status === "Entregue" && (
                             <span>✅ Veículo entregue</span>

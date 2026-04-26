@@ -79,9 +79,14 @@ export default function Financeiro() {
             >
                 <h3>📋 Últimos Pagamentos</h3>
 
+                {/*<p style={{ color: "#666" }}>*/}
+                {/*    Nenhum pagamento encontrado.*/}
+                {/*</p>*/}
+
                 <p style={{ color: "#666" }}>
-                    Nenhum pagamento encontrado.
+                    Em breve histórico de recebimentos.
                 </p>
+
             </div>
         </div>
     );
