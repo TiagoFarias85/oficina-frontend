@@ -547,7 +547,14 @@ function OrdemServicoDetalhe() {
             </div>
 
             <p><strong>Descrição do Problema:</strong> {os.descricaoProblema}</p>
-            <p><strong>Data de Abertura:</strong> {new Date(os.dataAbertura).toLocaleString()}</p>
+                {/*<p><strong>Data de Abertura:</strong> {new Date(os.dataAbertura).toLocaleString()}</p>*/}
+                <p>
+                    <strong>Data de Abertura:</strong>{" "}
+                    {new Date(os.dataAbertura).toLocaleString("pt-BR", {
+                        dateStyle: "short",
+                        timeStyle: "medium"
+                    })}
+                </p>
 
             {/*<p><strong>Total:</strong> R$ {os.valorTotal}</p>*/}
             <div
