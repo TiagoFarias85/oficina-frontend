@@ -84,7 +84,8 @@ function Dashboard() {
                 onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
             >
                 <strong>OS Mês</strong>
-                <div style={cardValue}>{dados.osMes}</div>
+                {/*<div style={cardValue}>{dados.osMes}</div>*/}
+                <div style={cardValue}>{dados.osHoje}</div>
             </div>
 
             <div style={cardStyle} onClick={() => navigate("/ordens-servico?status=ABERTA")}
@@ -93,7 +94,8 @@ function Dashboard() {
             >
                 <strong>Em Aberto</strong>
                 <div style={{ ...cardValue, color: "#2563eb" }}>
-                    {dados.abertas}
+                    {/*{dados.abertas}*/}
+                    {dados.osAbertas}
                 </div>
             </div>
 
