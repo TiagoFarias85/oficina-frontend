@@ -674,7 +674,7 @@ async function registrarPagamento() {
                 }}
             >
                 <h3 style={{ margin: 0 }}>
-                        💰 Total da OS: R$ {Number(os.valorTotal).toLocaleString("pt-BR", {
+                        💰 Total da OS: {Number(os.valorTotal).toLocaleString("pt-BR", {
                             style: "currency",
                             currency: "BRL"
                         })}
