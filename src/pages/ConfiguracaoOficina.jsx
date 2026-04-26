@@ -21,7 +21,7 @@ function ConfiguracaoOficina() {
     async function salvar() {
         await apiPut("/oficina", {
             nome,
-            cnpj
+            cnpj: cnpj.replace(/\D/g, "")
         });
 
         setMensagem("Dados salvos com sucesso.");
@@ -36,6 +36,22 @@ function ConfiguracaoOficina() {
         outline: "none",
         boxSizing: "border-box"
     };
+
+    function formatarCnpj(valor) {
+
+        valor = (valor || "").toString();
+
+        valor = valor.replace(/\D/g, "");
+
+        valor = valor.substring(0, 14);
+
+        valor = valor.replace(/^(\d{2})(\d)/, "$1.$2");
+        valor = valor.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+        valor = valor.replace(/\.(\d{3})(\d)/, ".$1/$2");
+        valor = valor.replace(/(\d{4})(\d)/, "$1-$2");
+
+        return valor;
+    }
 
     return (
         <div style={{ padding: "30px" }}>
@@ -69,12 +85,13 @@ function ConfiguracaoOficina() {
                     fontWeight: "600",
                     color: "#374151"
                 }}>
-                    CNPJ
+                    CNPJ da Empresa
                 </label>
 
                 <input
                     value={cnpj}
-                    onChange={e => setCnpj(e.target.value)}
+                    onChange={e => setCnpj(formatarCnpj(e.target.value))}
+                    placeholder="00.000.000/0000-00"
                     style={inputStyle}
                 />
 
