@@ -12,6 +12,7 @@ function EditarUsuario() {
     const [email, setEmail] = useState("");
     const [perfil, setPerfil] = useState("ATENDENTE");
     const [login, setLogin] = useState("");
+    const [original, setOriginal] = useState(null);
 
     useEffect(() => {
 
@@ -29,6 +30,13 @@ function EditarUsuario() {
                 setEmail(response.email);
                 setPerfil(response.perfil);
 
+                setOriginal({
+                    login: response.login || "",
+                    nome: response.nome || "",
+                    email: response.email || "",
+                    perfil: response.perfil || ""
+                });
+
             } catch {
 
                 toastErro("Erro ao carregar usuário");
@@ -44,11 +52,35 @@ function EditarUsuario() {
     async function salvar() {
 
         try {
+            if (!login.trim()) {
+                toastErro("Informe o login.");
+                return;
+            }
+
+            if (!nome.trim()) {
+                toastErro("Informe o nome.");
+                return;
+            }
+
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                toastErro("Informe um e-mail válido.");
+                return;
+            }
+
+            if (
+                login.trim() === original.login &&
+                nome.trim() === original.nome &&
+                email.trim() === original.email &&
+                perfil === original.perfil
+            ) {
+                toastErro("Nenhuma alteração realizada.");
+                return;
+            }
 
             await apiPut(`/usuarios/${id}`, {
-                login,
-                nome,
-                email,
+                login: login.trim(),
+                nome: nome.trim(),
+                email: email.trim(),
                 perfil
             });
 
@@ -57,9 +89,7 @@ function EditarUsuario() {
             navigate("/usuarios");
 
         } catch {
-
             toastErro("Erro ao atualizar usuário");
-
         }
 
     }
