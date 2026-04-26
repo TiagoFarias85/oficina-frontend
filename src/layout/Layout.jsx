@@ -75,6 +75,10 @@ function Layout() {
                         <span>Ordens</span>
                     </NavLink>
 
+                    <NavLink to="/financeiro">
+                        💰 Financeiro
+                    </NavLink>
+
                     {permissions.USUARIOS.includes(perfil) && (
                         <>
                             <NavLink to="/usuarios" style={linkStyle} className="sidebar-link">

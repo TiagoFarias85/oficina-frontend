@@ -21,6 +21,7 @@ import OrdensServicoPorVeiculo from "./pages/ordens/OrdensServicoPorVeiculo";
 import TrocarSenha from "./pages/TrocarSenha";
 import AlterarSenha from "./pages/AlterarSenha";
 import ConfiguracaoOficina from "./pages/ConfiguracaoOficina";
+import Financeiro from "./pages/Financeiro";
 
 function App() {
 
@@ -99,6 +100,7 @@ function App() {
                     <Route path="/trocar-senha" element={<TrocarSenha />} />
                     <Route path="/alterar-senha" element={<AlterarSenha />} />
                     <Route path="/configuracao-oficina" element={<ConfiguracaoOficina />} />
+                    <Route path="/financeiro" element={<Financeiro />} />
 
                 </Route>
 
