@@ -564,12 +564,14 @@ async function registrarPagamento() {
 
             <div style={{ marginTop: 10, marginBottom: 20 }}>
 
-                {os.laudoGerado ? (
-                    <span style={{ color: 'green', fontWeight: 'bold' }}>
-                        ✔ Laudo já gerado
-                    </span>
+                    {
+                    //    os.laudoGerado ? (
+                    //<span style={{ color: 'green', fontWeight: 'bold' }}>
+                    //    ✔ Laudo já gerado
+                    //</span>
 
-                ) : os.status === "Finalizado" ? (
+                    //    ) :
+                            os.status === "Finalizado" ? (
 
                     <button
                         onClick={() => gerarLaudo()}
