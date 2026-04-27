@@ -15,7 +15,7 @@ function Layout() {
     useEffect(() => {
         async function carregarOficina() {
             try {
-                const response = await apiGet("/configuracao-oficina");
+                const response = await apiGet("/oficina");
                 setNomeOficina(response.nome || "");
             } catch {
                 setNomeOficina("");
