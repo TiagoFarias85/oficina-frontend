@@ -153,7 +153,7 @@ function OrdensServicoList() {
                                 justifyContent: "space-between",
                                 marginBottom: 10
                             }}>
-                                <strong>OS #{os.id}</strong>
+                                <strong>OS {String(os.id).padStart(4, "0")} • { os.clienteNome} </strong>
                                 <span>
                                     {os.laudoGerado ? "🔒" : "🔓"}
                                 </span>
