@@ -302,11 +302,34 @@ async function registrarPagamento() {
     //    )
     //}
 
-    function gerarLaudo() {
-        window.open(
-            `https://oficina-tiago-api-dveqfccse5avhzaz.brazilsouth-01.azurewebsites.net/api/ordens-servico/${id}/laudo`,
-            "_blank"
-        );
+    //function gerarLaudo() {
+    //    window.open(
+    //        `https://oficina-tiago-api-dveqfccse5avhzaz.brazilsouth-01.azurewebsites.net/api/ordens-servico/${id}/laudo`,
+    //        "_blank"
+    //    );
+    //}
+
+    async function gerarLaudo() {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(
+                `https://oficina-tiago-api-dveqfccse5avhzaz.brazilsouth-01.azurewebsites.net/api/ordens-servico/${id}/laudo`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            window.open(url, "_blank");
+
+        } catch {
+            toastErro("Erro ao gerar laudo");
+        }
     }
 
     if (erro) return <p style={{ color: 'red' }}>{erro}</p>
