@@ -290,7 +290,9 @@ async function registrarPagamento() {
         toastSucesso("Pagamento registrado com sucesso!");
 
     } catch (error) {
-        toastErro("Erro ao registrar pagamento");
+        toastErro(
+            error.message || "Erro ao registrar pagamento"
+        );
         console.error(error);
     }
 }
