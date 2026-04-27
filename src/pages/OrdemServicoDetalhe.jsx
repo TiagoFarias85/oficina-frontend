@@ -295,11 +295,18 @@ async function registrarPagamento() {
     }
 }
 
+    //function gerarLaudo() {
+    //    window.open(
+    //        `http://localhost:5175/api/ordens-servico/${id}/laudo`,
+    //        '_blank'
+    //    )
+    //}
+
     function gerarLaudo() {
         window.open(
-            `http://localhost:5175/api/ordens-servico/${id}/laudo`,
-            '_blank'
-        )
+            `https://oficina-tiago-api-dveqfccse5avhzaz.brazilsouth-01.azurewebsites.net/api/ordens-servico/${id}/laudo`,
+            "_blank"
+        );
     }
 
     if (erro) return <p style={{ color: 'red' }}>{erro}</p>
