@@ -1,14 +1,29 @@
-﻿import { useContext } from "react";
+﻿import { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { FiHome, FiUsers, FiTruck, FiFileText, FiLogOut, FiSettings, FiDollarSign } from "react-icons/fi";
 import "../styles/usuarios.css";
 import BuscaPlaca from "../components/BuscaPlaca";
 import permissions from "../config/permissions";
+import { apiGet } from "../services/api";
 
 function Layout() {
 
     const { logout, usuarioNome, perfil } = useContext(AuthContext);
+    const [nomeOficina, setNomeOficina] = useState("");
+
+    useEffect(() => {
+        async function carregarOficina() {
+            try {
+                const response = await apiGet("/configuracao-oficina");
+                setNomeOficina(response.nome || "");
+            } catch {
+                setNomeOficina("");
+            }
+        }
+
+        carregarOficina();
+    }, []);
 
     return (
         <div style={{ display: "flex", height: "100vh", fontFamily: "Inter, sans-serif" }}>
@@ -145,9 +160,33 @@ function Layout() {
                     <BuscaPlaca />
 
                     {/* USUÁRIO */}
-                    <div style={{ fontWeight: 500 }}>
-                        👤 {usuarioNome} • {perfil}
+                    {/*<div style={{ fontWeight: 500 }}>*/}
+                    {/*    👤 {usuarioNome} • {perfil}*/}
+                    {/*</div>*/}
+
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "18px"
+                        }}
+                    >
+
+                        {nomeOficina && (
+                            <div style={{
+                                fontWeight: 600,
+                                color: "#1e3c72"
+                            }}>
+                                🏢 {nomeOficina}
+                            </div>
+                        )}
+
+                        <div style={{ fontWeight: 500 }}>
+                            👤 {usuarioNome} • {perfil}
+                        </div>
+
                     </div>
+
                 </header>
 
                 {/* PÁGINA */}
