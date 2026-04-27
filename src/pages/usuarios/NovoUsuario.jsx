@@ -21,6 +21,11 @@ function NovoUsuario() {
                 return;
             }
 
+            //if (email.trim().length > 0 && !email.includes("@")) {
+            //    toastErro("Informe um e-mail válido.");
+            //    return;
+            //}
+
             await apiPost("/usuarios", {
                 login,
                 nome,
